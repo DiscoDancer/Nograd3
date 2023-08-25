@@ -12,7 +12,7 @@ public sealed class ProductUpdatedEvent : BaseEvent
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentNullException(nameof(description));
         if (string.IsNullOrWhiteSpace(category)) throw new ArgumentNullException(nameof(category));
-        if (price <= 0) throw new ArgumentException(nameof(price));
+        if (price <= 0) throw new ArgumentOutOfRangeException(nameof(price));
         if (productId == Guid.Empty) throw new ArgumentException(nameof(productId));
 
         Name = name;

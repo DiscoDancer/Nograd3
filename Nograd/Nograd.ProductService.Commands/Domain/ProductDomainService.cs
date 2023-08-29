@@ -1,8 +1,8 @@
 ﻿using Nograd.ProductService.Events;
 
-namespace Nograd.ProductService.Commands.Features.CreateProduct
+namespace Nograd.ProductService.Commands.Domain
 {
-    public static class CreateProductDomainService
+    public static class ProductDomainService
     {
         public static ProductCreatedEvent Create(
             string name,

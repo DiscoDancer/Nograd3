@@ -1,11 +1,14 @@
 using Nograd.ProductService.Commands.Features.CreateProduct;
+using Nograd.ProductService.Commands.Infrastructure.EventStore;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.UseEventStore();
 
 builder.Services.UseCreateProductFeature();
 

@@ -5,10 +5,17 @@ namespace Nograd.ProductService.Commands.Features.CreateProduct
 {
     public sealed class CreateProductCommandHandler: IRequestHandler<CreateProductCommand>
     {
+        private readonly IEventStore _eventStore;
+
+        public CreateProductCommandHandler(IEventStore store)
+        {
+            _eventStore = store ?? throw new ArgumentNullException(nameof(store));
+        }
+
         public Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var productId = Guid.NewGuid();
-            var productCreatedEvent = CreateProductDomainService.Create(
+            var productCreatedEvent = ProductDomainService.Create(
                 name: request.Name,
                 description: request.Description,
                 category: request.Category,
@@ -16,8 +23,10 @@ namespace Nograd.ProductService.Commands.Features.CreateProduct
                 productId: productId);
             var product = Product.Create(productCreatedEvent);
 
+            _eventStore.SaveEventAsync(productCreatedEvent);
+
             // todo push to kafka
-            // todo save to mongo
+
 
             throw new NotImplementedException();
         }

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductService", "ProductService", "{D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.ProductService.Events", "Nograd.ProductService.Events\Nograd.ProductService.Events.csproj", "{A70D153C-E3E1-4676-AD03-B3F0F5E52831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.ProductService.Events", "Nograd.ProductService.Events\Nograd.ProductService.Events.csproj", "{A70D153C-E3E1-4676-AD03-B3F0F5E52831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.ProductService.Commands", "Nograd.ProductService.Commands\Nograd.ProductService.Commands.csproj", "{42A9520C-7EC7-477F-BDA3-D3297B15022A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.ProductService.Commands", "Nograd.ProductService.Commands\Nograd.ProductService.Commands.csproj", "{42A9520C-7EC7-477F-BDA3-D3297B15022A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,6 +4,7 @@ namespace Nograd.ProductService.Commands.Domain
 {
     public interface IEventStore
     {
-        Task SaveEventAsync(ProductCreatedEvent @event);  
+        Task SaveEventAsync(ProductCreatedEvent @event);
+        Task<List<BaseEvent>> GetEventsAsync(Guid productId);
     }
 }

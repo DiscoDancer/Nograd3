@@ -31,5 +31,14 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
 
             await _eventStoreCollection.InsertOneAsync(eventModel).ConfigureAwait(false);
         }
+
+        public async Task<List<BaseEvent>> GetEventsAsync(Guid productId)
+        {
+            var rawRows = await _eventStoreCollection
+                .Find(x => x.ProductId == productId)
+                .ToListAsync();
+
+            return rawRows.OrderBy(x => x.Version).Select(x => x.EventData).ToList();
+        }
     }
 }

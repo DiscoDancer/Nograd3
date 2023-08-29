@@ -1,4 +1,5 @@
 using Nograd.ProductService.Commands.Features.CreateProduct;
+using Nograd.ProductService.Commands.Features.UpdateProduct;
 using Nograd.ProductService.Commands.Infrastructure.EventStore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Progr
 builder.UseEventStore();
 
 builder.Services.UseCreateProductFeature();
+builder.Services.UseUpdateProductFeature();
 
 var app = builder.Build();
 

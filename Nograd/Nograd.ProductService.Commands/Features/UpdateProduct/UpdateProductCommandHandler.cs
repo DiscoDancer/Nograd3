@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
 using Nograd.ProductService.Commands.Infrastructure.EventStore;
-using Nograd.ProductService.Events;
 
 namespace Nograd.ProductService.Commands.Features.UpdateProduct
 {
@@ -17,23 +16,10 @@ namespace Nograd.ProductService.Commands.Features.UpdateProduct
         public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var events = await _eventStore.GetEventsAsync(request.ProductId);
-
-            if (!events.Any())
+            var product = Product.GetNotCreatedProduct();
+            foreach (var @event in events)
             {
-                throw new Exception("Not possible to find any events");
-            }
-
-            var firstEvent = events.First() as ProductCreatedEvent;
-            if (firstEvent == null)
-            {
-                throw new Exception("The first event should be always create event.");
-            }
-
-            var product = Product.Create(firstEvent);
-            var i = 1;
-            for (; i < events.Count(); i++)
-            {
-                EventApplicator.ApplyEvent(product, events[i]);
+                product = EventApplicator.ApplyEvent(product, @event);
             }
 
             var productUpdatedEvent = ProductDomainService.Update(
@@ -43,7 +29,7 @@ namespace Nograd.ProductService.Commands.Features.UpdateProduct
                 category: request.Category,
                 price: request.Price);
 
-            await _eventStore.SaveEventAsync(productUpdatedEvent);
+            await _eventStore.SaveEventAsync(productUpdatedEvent, product.Id);
             // push event to kafka
 
             throw new NotImplementedException();

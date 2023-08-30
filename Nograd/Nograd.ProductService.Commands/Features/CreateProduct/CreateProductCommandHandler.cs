@@ -15,15 +15,16 @@ namespace Nograd.ProductService.Commands.Features.CreateProduct
         public Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var productId = Guid.NewGuid();
+            var product = Product.GetNotCreatedProduct();
             var productCreatedEvent = ProductDomainService.Create(
+                product: product,
                 name: request.Name,
                 description: request.Description,
                 category: request.Category,
                 price: request.Price,
                 productId: productId);
-            var product = Product.Create(productCreatedEvent);
 
-            _eventStore.SaveEventAsync(productCreatedEvent);
+            _eventStore.SaveEventAsync(productCreatedEvent, productId);
 
             // todo push to kafka
 

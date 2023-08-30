@@ -2,36 +2,26 @@
 
 namespace Nograd.ProductService.Commands.Domain
 {
-    public record Product (Guid Id, bool IsActive)
+    public record Product (Guid Id, ProductLifecycleStates State)
     {
-        public static Product Create(ProductCreatedEvent @event)
+        public static Product GetNotCreatedProduct()
         {
-            return new Product(@event.ProductId, true);
+            return new Product(Guid.Empty, ProductLifecycleStates.ToBeCreated);
         }
 
         public Product Apply(ProductCreatedEvent @event)
         {
-            return this;
+            return new Product(Id: @event.ProductId.Value, State: ProductLifecycleStates.Created);
         }
 
         public Product Apply(ProductUpdatedEvent @event)
         {
-            if (!IsActive)
-            {
-                throw new Exception($"The Product with id {Id} already has been deleted. It can't be updated.");
-            }
-
             return this;
         }
 
         public Product Apply(ProductRemovedEvent @event)
         {
-            if (!IsActive)
-            {
-                throw new Exception($"The Product with id {Id} already has been deleted.");
-            }
-
-            return this with { IsActive = false };
+            return this with { State = ProductLifecycleStates.Deleted };
         }
     }
 }

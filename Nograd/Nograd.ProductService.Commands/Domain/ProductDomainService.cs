@@ -5,6 +5,7 @@ namespace Nograd.ProductService.Commands.Domain
     public static class ProductDomainService
     {
         public static ProductCreatedEvent Create(
+            Product product,
             string name,
             string description,
             string category,
@@ -18,15 +19,22 @@ namespace Nograd.ProductService.Commands.Domain
             if (price <= 0) throw new ArgumentOutOfRangeException(nameof(price));
             if (productId == Guid.Empty) throw new ArgumentException(nameof(productId));
 
-            return new ProductCreatedEvent(
-                name: name,
-                description: description,
-                category: category,
-                price: price,
-                productId: productId);
+            if (product.State != ProductLifecycleStates.ToBeCreated)
+            {
+                throw new Exception($"Product with id {productId} already has been created");
+            }
+
+            return new ProductCreatedEvent
+            {
+                Category = category,
+                Price = price,
+                ProductId = productId,
+                Name = name,
+                Description = description,
+            };
         }
 
-        public static ProductCreatedEvent Update(
+        public static ProductUpdatedEvent Update(
             Product product,
             string name,
             string description,
@@ -41,17 +49,31 @@ namespace Nograd.ProductService.Commands.Domain
             if (product == null) throw new ArgumentException(nameof(product));
             if (product.Id == Guid.Empty) throw new ArgumentException(nameof(product.Id));
 
-            if (!product.IsActive)
+            if (product.State != ProductLifecycleStates.Created)
             {
-                throw new Exception($"The product with id {product.Id} has been removed. Not possible to update it.");
+                throw new Exception($"The Product with id {product.Id} already has been removed or it is not yet created. So it can't be updated.");
             }
 
-            return new ProductCreatedEvent(
-                name: name,
-                description: description,
-                category: category,
-                price: price,
-                productId: product.Id);
+            return new ProductUpdatedEvent()
+            {
+                Category = category,
+                Price = price,
+                ProductId = product.Id,
+                Description = description,
+                Name = name,
+            };
+        }
+
+        public static ProductRemovedEvent Remove(Product product)
+        {
+            if (product.Id == Guid.Empty) throw new ArgumentException(nameof(product.Id));
+
+            if (product.State != ProductLifecycleStates.Created)
+            {
+                throw new Exception($"The Product with id {product.Id} already has been removed or it is not yet created. So it can't be removed.");
+            }
+
+            return new ProductRemovedEvent(product.Id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Nograd.ProductService.Commands.Domain;
 using Nograd.ProductService.Events;
@@ -7,7 +8,6 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
 {
     public sealed class EventStore : IEventStore
     {
-        public const int InitialVersion = 1;
         private readonly IMongoCollection<EventModel> _eventStoreCollection;
 
         public EventStore(IOptions<MongoDbConfig> config)
@@ -18,13 +18,12 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
             _eventStoreCollection = mongoDatabase.GetCollection<EventModel>(config.Value.Collection);
         }
 
-        public async Task SaveEventAsync(ProductCreatedEvent @event)
+        public async Task SaveEventAsync(BaseEvent @event, Guid productId)
         {
             var eventModel = new EventModel
             {
                 TimeStamp = DateTime.Now,
-                ProductId = @event.ProductId,
-                Version = InitialVersion,
+                ProductId = productId,
                 EventType = @event.GetType().Name,
                 EventData = @event
             };
@@ -38,7 +37,9 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
                 .Find(x => x.ProductId == productId)
                 .ToListAsync();
 
-            return rawRows.OrderBy(x => x.Version).Select(x => x.EventData).ToList();
+            var result = rawRows.Where(x => x.EventData != null).Select(x => x.EventData!).ToList();
+
+            return result;
         }
     }
 }

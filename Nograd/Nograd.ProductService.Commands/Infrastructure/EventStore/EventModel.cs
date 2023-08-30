@@ -8,11 +8,10 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public DateTime TimeStamp { get; set; }
-        public Guid ProductId { get; set; }
-        public int Version { get; set; }
-        public string EventType { get; set; }
-        public BaseEvent EventData { get; set; }
+        public string? Id { get; set; }
+        public DateTime? TimeStamp { get; set; }
+        public Guid? ProductId { get; set; }
+        public string? EventType { get; set; }
+        public BaseEvent? EventData { get; set; }
     }
 }

@@ -9,5 +9,5 @@ public sealed class ProductRemovedEvent : BaseEvent
         ProductId = productId;
     }
 
-    public Guid ProductId { get; }
+    public Guid? ProductId { get; set; }
 }

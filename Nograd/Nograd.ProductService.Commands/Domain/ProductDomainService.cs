@@ -54,7 +54,7 @@ namespace Nograd.ProductService.Commands.Domain
                 throw new Exception($"The Product with id {product.Id} already has been removed or it is not yet created. So it can't be updated.");
             }
 
-            return new ProductUpdatedEvent()
+            return new ProductUpdatedEvent
             {
                 Category = category,
                 Price = price,

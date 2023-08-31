@@ -1,35 +1,30 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
+using Nograd.ProductService.Commands.Features.Base;
 
-namespace Nograd.ProductService.Commands.Features.CreateProduct
+namespace Nograd.ProductService.Commands.Features.CreateProduct;
+
+public sealed class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
 {
-    public sealed class CreateProductCommandHandler: IRequestHandler<CreateProductCommand>
+    private readonly IProductEventHandlingStrategy _eventHandlingStrategy;
+
+    public CreateProductCommandHandler(IProductEventHandlingStrategy eventHandlingStrategy)
     {
-        private readonly IEventStore _eventStore;
+        _eventHandlingStrategy = eventHandlingStrategy ?? throw new ArgumentNullException(nameof(eventHandlingStrategy));
+    }
 
-        public CreateProductCommandHandler(IEventStore store)
-        {
-            _eventStore = store ?? throw new ArgumentNullException(nameof(store));
-        }
+    public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    {
+        var productId = Guid.NewGuid();
+        var product = Product.GetNotCreatedProduct();
+        var productCreatedEvent = ProductEventProducer.Create(
+            product,
+            request.Name,
+            request.Description,
+            request.Category,
+            request.Price,
+            productId);
 
-        public Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            var productId = Guid.NewGuid();
-            var product = Product.GetNotCreatedProduct();
-            var productCreatedEvent = Domain.ProductEventProducer.Create(
-                product: product,
-                name: request.Name,
-                description: request.Description,
-                category: request.Category,
-                price: request.Price,
-                productId: productId);
-
-            _eventStore.SaveEventAsync(productCreatedEvent, productId);
-
-            // todo push to kafka
-
-
-            throw new NotImplementedException();
-        }
+        await _eventHandlingStrategy.HandleAsync(productCreatedEvent, productId);
     }
 }

@@ -11,6 +11,11 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
 
         public EventStore(IOptions<MongoDbConfig> config)
         {
+            if (config == null) throw new ArgumentNullException(nameof(config));
+            if (string.IsNullOrWhiteSpace(config.Value.ConnectionString)) throw new ArgumentNullException(nameof(config.Value.ConnectionString));
+            if (string.IsNullOrWhiteSpace(config.Value.Database)) throw new ArgumentNullException(nameof(config.Value.Database));
+            if (string.IsNullOrWhiteSpace(config.Value.Collection)) throw new ArgumentNullException(nameof(config.Value.Collection));
+
             var mongoClient = new MongoClient(config.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(config.Value.Database);
 

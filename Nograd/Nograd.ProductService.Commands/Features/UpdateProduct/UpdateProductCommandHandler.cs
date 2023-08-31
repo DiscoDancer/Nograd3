@@ -1,33 +1,32 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
+using Nograd.ProductService.Commands.Features.Base;
 
-namespace Nograd.ProductService.Commands.Features.UpdateProduct
+namespace Nograd.ProductService.Commands.Features.UpdateProduct;
+
+public sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
 {
-    public sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
+    private readonly IEventStore _eventStore;
+    private readonly IProductEventHandlingStrategy _eventHandlingStrategy;
+
+    public UpdateProductCommandHandler(IEventStore store, IProductEventHandlingStrategy eventHandlingStrategy)
     {
-        private readonly IEventStore _eventStore;
+        _eventStore = store ?? throw new ArgumentNullException(nameof(store));
+        _eventHandlingStrategy =
+            eventHandlingStrategy ?? throw new ArgumentNullException(nameof(eventHandlingStrategy));
+    }
 
-        public UpdateProductCommandHandler(IEventStore store)
-        {
-            _eventStore = store ?? throw new ArgumentNullException(nameof(store));
-        }
+    public async Task Handle(UpdateProductCommand command, CancellationToken cancellationToken)
+    {
+        var events = await _eventStore.GetEventsAsync(command.ProductId);
+        var product = EventApplicator.RestoreFromEvents(events);
+        var productUpdatedEvent = ProductEventProducer.Update(
+            product,
+            command.Name,
+            command.Description,
+            command.Category,
+            command.Price);
 
-        public async Task Handle(UpdateProductCommand command, CancellationToken cancellationToken)
-        {
-            var events = await _eventStore.GetEventsAsync(command.ProductId);
-            var product = EventApplicator.RestoreFromEvents(events);
-
-            var productUpdatedEvent = Domain.ProductEventProducer.Update(
-                product: product,
-                name: command.Name,
-                description: command.Description,
-                category: command.Category,
-                price: command.Price);
-
-            await _eventStore.SaveEventAsync(productUpdatedEvent, product.Id);
-            // push event to kafka
-
-            throw new NotImplementedException();
-        }
+        await _eventHandlingStrategy.HandleAsync(productUpdatedEvent, productUpdatedEvent.ProductId);
     }
 }

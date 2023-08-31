@@ -1,20 +1,15 @@
-using Nograd.ProductService.Commands.Features.CreateProduct;
-using Nograd.ProductService.Commands.Features.RemoveProduct;
-using Nograd.ProductService.Commands.Features.UpdateProduct;
-using Nograd.ProductService.Commands.Infrastructure.EventStore;
+using Nograd.ProductService.Commands.Features;
+using Nograd.ProductService.Commands.Infrastructure;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.UseEventStore();
-
-builder.Services.UseCreateProductFeature();
-builder.Services.UseUpdateProductFeature();
-builder.Services.UseRemoveProductFeature();
+builder.UseInfrastructure();
+builder.Services.UseFeatures();
 
 var app = builder.Build();
 

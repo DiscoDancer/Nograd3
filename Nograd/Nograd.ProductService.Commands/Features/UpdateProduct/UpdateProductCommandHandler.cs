@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Commands.Infrastructure.EventStore;
 
 namespace Nograd.ProductService.Commands.Features.UpdateProduct
 {
@@ -16,11 +15,7 @@ namespace Nograd.ProductService.Commands.Features.UpdateProduct
         public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var events = await _eventStore.GetEventsAsync(request.ProductId);
-            var product = Product.GetNotCreatedProduct();
-            foreach (var @event in events)
-            {
-                product = EventApplicator.ApplyEvent(product, @event);
-            }
+            var product = EventApplicator.RestoreFromEvents(events);
 
             var productUpdatedEvent = ProductDomainService.Update(
                 product: product,

@@ -1,7 +1,6 @@
-﻿using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Commands.Domain.Events;
+﻿using Nograd.ProductService.Commands.Domain.Events;
 
-namespace Nograd.ProductService.Commands.Infrastructure.EventStore
+namespace Nograd.ProductService.Commands.Domain
 {
     public static class EventApplicator
     {
@@ -17,6 +16,16 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventStore
                          throw new Exception("Event application failed");
 
             return result;
+        }
+
+        public static Product RestoreFromEvents(IEnumerable<BaseEvent> events)
+        {
+            var product = Product.GetNotCreatedProduct();
+            foreach (var @event in events)
+            {
+                product = EventApplicator.ApplyEvent(product, @event);
+            }
+            return product;
         }
     }
 }

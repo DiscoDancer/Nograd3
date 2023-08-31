@@ -2,7 +2,7 @@
 
 namespace Nograd.ProductService.Commands.Domain
 {
-    public static class ProductService
+    public static class ProductEventProducer
     {
         public static ProductCreatedEvent Create(
             Product product,

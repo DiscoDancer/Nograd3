@@ -1,4 +1,5 @@
 using Nograd.ProductService.Commands.Features.CreateProduct;
+using Nograd.ProductService.Commands.Features.RemoveProduct;
 using Nograd.ProductService.Commands.Features.UpdateProduct;
 using Nograd.ProductService.Commands.Infrastructure.EventStore;
 
@@ -13,6 +14,7 @@ builder.UseEventStore();
 
 builder.Services.UseCreateProductFeature();
 builder.Services.UseUpdateProductFeature();
+builder.Services.UseRemoveProductFeature();
 
 var app = builder.Build();
 

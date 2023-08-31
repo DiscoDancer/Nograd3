@@ -12,17 +12,17 @@ namespace Nograd.ProductService.Commands.Features.UpdateProduct
             _eventStore = store ?? throw new ArgumentNullException(nameof(store));
         }
 
-        public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateProductCommand command, CancellationToken cancellationToken)
         {
-            var events = await _eventStore.GetEventsAsync(request.ProductId);
+            var events = await _eventStore.GetEventsAsync(command.ProductId);
             var product = EventApplicator.RestoreFromEvents(events);
 
-            var productUpdatedEvent = Domain.ProductService.Update(
+            var productUpdatedEvent = Domain.ProductEventProducer.Update(
                 product: product,
-                name: request.Name,
-                description: request.Description,
-                category: request.Category,
-                price: request.Price);
+                name: command.Name,
+                description: command.Description,
+                category: command.Category,
+                price: command.Price);
 
             await _eventStore.SaveEventAsync(productUpdatedEvent, product.Id);
             // push event to kafka

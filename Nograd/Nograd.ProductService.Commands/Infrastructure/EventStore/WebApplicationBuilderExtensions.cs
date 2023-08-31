@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization;
 using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Events;
+using Nograd.ProductService.Commands.Domain.Events;
 
 namespace Nograd.ProductService.Commands.Infrastructure.EventStore
 {

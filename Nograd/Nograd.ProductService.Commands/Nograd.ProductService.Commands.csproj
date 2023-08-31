@@ -13,8 +13,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Nograd.ProductService.Events\Nograd.ProductService.Events.csproj" />
-  </ItemGroup>
-
 </Project>

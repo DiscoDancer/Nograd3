@@ -1,4 +1,4 @@
-﻿namespace Nograd.ProductService.Events;
+﻿namespace Nograd.ProductService.Commands.Domain.Events;
 
 public sealed class ProductRemovedEvent : BaseEvent
 {

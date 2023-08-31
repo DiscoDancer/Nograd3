@@ -1,8 +1,8 @@
-﻿namespace Nograd.ProductService.Events;
+﻿namespace Nograd.ProductService.Commands.Domain.Events;
 
-public sealed class ProductCreatedEvent : BaseEvent
+public sealed class ProductUpdatedEvent : BaseEvent
 {
-    public ProductCreatedEvent() : base(nameof(ProductCreatedEvent))
+    public ProductUpdatedEvent() : base(nameof(ProductUpdatedEvent))
     {
     }
 

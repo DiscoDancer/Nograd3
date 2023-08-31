@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductService", "ProductService", "{D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.ProductService.Events", "Nograd.ProductService.Events\Nograd.ProductService.Events.csproj", "{A70D153C-E3E1-4676-AD03-B3F0F5E52831}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.ProductService.Commands", "Nograd.ProductService.Commands\Nograd.ProductService.Commands.csproj", "{42A9520C-7EC7-477F-BDA3-D3297B15022A}"
 EndProject
 Global
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A70D153C-E3E1-4676-AD03-B3F0F5E52831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A70D153C-E3E1-4676-AD03-B3F0F5E52831}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A70D153C-E3E1-4676-AD03-B3F0F5E52831}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A70D153C-E3E1-4676-AD03-B3F0F5E52831}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42A9520C-7EC7-477F-BDA3-D3297B15022A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42A9520C-7EC7-477F-BDA3-D3297B15022A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42A9520C-7EC7-477F-BDA3-D3297B15022A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -28,7 +22,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A70D153C-E3E1-4676-AD03-B3F0F5E52831} = {D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}
 		{42A9520C-7EC7-477F-BDA3-D3297B15022A} = {D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

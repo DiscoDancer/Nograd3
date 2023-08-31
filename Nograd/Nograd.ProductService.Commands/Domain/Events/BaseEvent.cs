@@ -1,4 +1,4 @@
-﻿namespace Nograd.ProductService.Events;
+﻿namespace Nograd.ProductService.Commands.Domain.Events;
 
 public abstract class BaseEvent
 {

@@ -1,4 +1,4 @@
-﻿using Nograd.ProductService.Events;
+﻿using Nograd.ProductService.Commands.Domain.Events;
 
 namespace Nograd.ProductService.Commands.Domain
 {

@@ -11,7 +11,7 @@ namespace Nograd.ProductService.Commands.Domain
 
         public Product Apply(ProductCreatedEvent @event)
         {
-            return new Product(Id: @event.ProductId.Value, State: ProductLifecycleStates.Created);
+            return new Product(Id: @event.ProductId, State: ProductLifecycleStates.Created);
         }
 
         public Product Apply(ProductUpdatedEvent @event)

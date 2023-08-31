@@ -17,7 +17,7 @@ namespace Nograd.ProductService.Commands.Features.UpdateProduct
             var events = await _eventStore.GetEventsAsync(request.ProductId);
             var product = EventApplicator.RestoreFromEvents(events);
 
-            var productUpdatedEvent = ProductDomainService.Update(
+            var productUpdatedEvent = Domain.ProductService.Update(
                 product: product,
                 name: request.Name,
                 description: request.Description,

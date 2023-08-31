@@ -1,13 +1,3 @@
 ﻿namespace Nograd.ProductService.Commands.Domain.Events;
 
-public sealed class ProductRemovedEvent : BaseEvent
-{
-    public ProductRemovedEvent(Guid productId) : base(nameof(ProductRemovedEvent))
-    {
-        if (productId == Guid.Empty) throw new ArgumentException(nameof(productId));
-
-        ProductId = productId;
-    }
-
-    public Guid? ProductId { get; set; }
-}
+public sealed record ProductRemovedEvent (Guid ProductId) : BaseEvent;

@@ -2,7 +2,7 @@
 
 namespace Nograd.ProductService.Commands.Domain
 {
-    public static class ProductDomainService
+    public static class ProductService
     {
         public static ProductCreatedEvent Create(
             Product product,
@@ -24,14 +24,12 @@ namespace Nograd.ProductService.Commands.Domain
                 throw new Exception($"Product with id {productId} already has been created");
             }
 
-            return new ProductCreatedEvent
-            {
-                Category = category,
-                Price = price,
-                ProductId = productId,
-                Name = name,
-                Description = description,
-            };
+            return new ProductCreatedEvent(
+                Name: name,
+                Description: description,
+                Category: category,
+                Price: price,
+                ProductId: productId);
         }
 
         public static ProductUpdatedEvent Update(
@@ -54,14 +52,12 @@ namespace Nograd.ProductService.Commands.Domain
                 throw new Exception($"The Product with id {product.Id} already has been removed or it is not yet created. So it can't be updated.");
             }
 
-            return new ProductUpdatedEvent
-            {
-                Category = category,
-                Price = price,
-                ProductId = product.Id,
-                Description = description,
-                Name = name,
-            };
+            return new ProductUpdatedEvent(
+                Name: name,
+                Description: description,
+                Category: category,
+                Price: price,
+                ProductId: product.Id);
         }
 
         public static ProductRemovedEvent Remove(Product product)

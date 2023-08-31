@@ -16,7 +16,7 @@ namespace Nograd.ProductService.Commands.Features.CreateProduct
         {
             var productId = Guid.NewGuid();
             var product = Product.GetNotCreatedProduct();
-            var productCreatedEvent = ProductDomainService.Create(
+            var productCreatedEvent = Domain.ProductService.Create(
                 product: product,
                 name: request.Name,
                 description: request.Description,

@@ -1,16 +1,5 @@
 ﻿namespace Nograd.ProductService.Commands.Domain.Events;
 
-public abstract class BaseEvent
+public abstract record BaseEvent
 {
-    protected BaseEvent(string type)
-    {
-        if (string.IsNullOrWhiteSpace(type))
-        {
-            throw new ArgumentNullException(nameof(type));
-        }
-
-        this.Type = type;
-    }
-
-    public string Type { get; }
 }

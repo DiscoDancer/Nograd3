@@ -1,10 +1,7 @@
-﻿using Nograd.ProductService.Commands.Features.Base;
-
-namespace Nograd.ProductService.Commands.Features.UpdateProduct;
+﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct;
 
 public sealed class
-    UpdateProductControllerInputToCommandMapper : IControllerInputToCommandMapper<UpdateProductControllerInput,
-        UpdateProductCommand>
+    UpdateProductControllerInputToCommandMapper : IUpdateProductControllerInputToCommandMapper
 {
     public UpdateProductCommand Map(UpdateProductControllerInput input)
     {

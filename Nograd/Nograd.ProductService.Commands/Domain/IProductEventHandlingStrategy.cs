@@ -1,6 +1,6 @@
 ﻿using Nograd.ProductService.Commands.Domain.Events;
 
-namespace Nograd.ProductService.Commands.Features.Base
+namespace Nograd.ProductService.Commands.Domain
 {
     public interface IProductEventHandlingStrategy
     {

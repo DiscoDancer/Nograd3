@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Commands.Features.Base;
 
 namespace Nograd.ProductService.Commands.Features.RemoveProduct;
 

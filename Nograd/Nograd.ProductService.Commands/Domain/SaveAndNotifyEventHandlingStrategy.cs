@@ -1,7 +1,6 @@
-﻿using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Commands.Domain.Events;
+﻿using Nograd.ProductService.Commands.Domain.Events;
 
-namespace Nograd.ProductService.Commands.Features.Base
+namespace Nograd.ProductService.Commands.Domain
 {
     public sealed class SaveAndNotifyEventHandlingStrategy : IProductEventHandlingStrategy
     {

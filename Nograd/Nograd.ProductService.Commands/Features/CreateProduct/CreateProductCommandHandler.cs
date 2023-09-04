@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Commands.Features.Base;
 
 namespace Nograd.ProductService.Commands.Features.CreateProduct;
 
@@ -13,18 +12,17 @@ public sealed class CreateProductCommandHandler : IRequestHandler<CreateProductC
         _eventHandlingStrategy = eventHandlingStrategy ?? throw new ArgumentNullException(nameof(eventHandlingStrategy));
     }
 
-    public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        var productId = Guid.NewGuid();
         var product = Product.GetNotCreatedProduct();
         var productCreatedEvent = ProductEventProducer.Create(
             product,
-            request.Name,
-            request.Description,
-            request.Category,
-            request.Price,
-            productId);
+            command.Name,
+            command.Description,
+            command.Category,
+            command.Price,
+            command.ProductId);
 
-        await _eventHandlingStrategy.HandleAsync(productCreatedEvent, productId);
+        await _eventHandlingStrategy.HandleAsync(productCreatedEvent, command.ProductId);
     }
 }

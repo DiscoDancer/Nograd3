@@ -1,9 +1,6 @@
-﻿using Nograd.ProductService.Commands.Features.Base;
+﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct;
 
-namespace Nograd.ProductService.Commands.Features.RemoveProduct
+public sealed class RemoveProductControllerInput
 {
-    public sealed class RemoveProductControllerInput: BaseControllerInput
-    {
-        public Guid? ProductId { get; set; }
-    }
+    public Guid? ProductId { get; set; }
 }

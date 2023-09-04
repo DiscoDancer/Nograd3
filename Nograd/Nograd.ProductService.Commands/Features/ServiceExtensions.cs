@@ -1,4 +1,4 @@
-﻿using Nograd.ProductService.Commands.Features.Base;
+﻿using Nograd.ProductService.Commands.Domain;
 using Nograd.ProductService.Commands.Features.CreateProduct;
 using Nograd.ProductService.Commands.Features.RemoveProduct;
 using Nograd.ProductService.Commands.Features.UpdateProduct;

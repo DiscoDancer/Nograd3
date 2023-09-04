@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Nograd.ProductService.Commands.Features.Base;
 
 namespace Nograd.ProductService.Commands.Features.CreateProduct
 {
@@ -9,12 +8,12 @@ namespace Nograd.ProductService.Commands.Features.CreateProduct
     public sealed class CreateProductController: ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IControllerInputToCommandMapper<CreateProductControllerInput, CreateProductCommand> _mapper;
+        private readonly ICreateProductControllerInputToCommandMapper _mapper;
 
 
         public CreateProductController(
             IMediator mediator,
-            IControllerInputToCommandMapper<CreateProductControllerInput, CreateProductCommand> mapper)
+            ICreateProductControllerInputToCommandMapper mapper)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -23,7 +22,7 @@ namespace Nograd.ProductService.Commands.Features.CreateProduct
         [HttpPost]
         public async Task<ActionResult> CreateProductAsync(CreateProductControllerInput input)
         {
-            var command = _mapper.Map(input);
+            var command = _mapper.Map(input, Guid.NewGuid());
             await _mediator.Send(command);
 
             throw new NotImplementedException();

@@ -1,6 +1,4 @@
-﻿using Confluent.Kafka;
-using Nograd.ProductService.Commands.Domain;
-using Nograd.ProductService.Commands.Infrastructure.EventStore;
+﻿using Nograd.ProductService.Commands.Domain;
 
 namespace Nograd.ProductService.Commands.Infrastructure.EventNotifications;
 
@@ -10,10 +8,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.Configure<KafkaConfig>(builder.Configuration.GetSection(nameof(KafkaConfig)));
 
-        //var x = builder.Configuration.GetSection(nameof(ProducerConfig));
-
-        //builder.Services.Configure<ProducerConfig>(builder.Configuration.GetSection(nameof(ProducerConfig)));
-
         builder.Services.AddScoped<IEventNotificator, EventNotificator>();
+        builder.Services.AddScoped<IEventToMessageMapper, EventToMessageMapper>();
     }
 }

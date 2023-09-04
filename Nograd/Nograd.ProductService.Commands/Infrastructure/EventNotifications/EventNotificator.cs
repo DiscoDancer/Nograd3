@@ -10,9 +10,11 @@ public sealed class EventNotificator : IEventNotificator
 {
     private readonly ProducerConfig _config;
     private readonly string _topicName;
+    private readonly IEventToMessageMapper _eventToMessageMapper;
 
-    public EventNotificator(IOptions<KafkaConfig> config)
+    public EventNotificator(IOptions<KafkaConfig> config, IEventToMessageMapper eventToMessageMapper)
     {
+        _eventToMessageMapper = eventToMessageMapper ?? throw new ArgumentNullException(nameof(eventToMessageMapper));
         if (config == null) throw new ArgumentNullException(nameof(config));
         if (string.IsNullOrWhiteSpace(config.Value.Topic)) throw new ArgumentNullException(nameof(config.Value.Topic));
         if (string.IsNullOrWhiteSpace(config.Value.Url)) throw new ArgumentNullException(nameof(config.Value.Url));
@@ -22,6 +24,7 @@ public sealed class EventNotificator : IEventNotificator
             BootstrapServers = config.Value.Url
         };
         _topicName = config.Value.Topic;
+        _eventToMessageMapper = eventToMessageMapper;
     }
 
     public async Task Notify(BaseEvent @event)
@@ -31,10 +34,12 @@ public sealed class EventNotificator : IEventNotificator
             .SetValueSerializer(Serializers.Utf8)
             .Build();
 
+        var message = _eventToMessageMapper.Map(@event);
+
         var eventMessage = new Message<string, string>
         {
             Key = Guid.NewGuid().ToString(),
-            Value = JsonSerializer.Serialize(@event, @event.GetType())
+            Value = JsonSerializer.Serialize(message, message.GetType())
         };
         var deliveryResult = await producer.ProduceAsync(_topicName, eventMessage);
 

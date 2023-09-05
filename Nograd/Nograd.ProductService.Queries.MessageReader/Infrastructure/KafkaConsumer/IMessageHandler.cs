@@ -4,6 +4,6 @@ namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaCons
 {
     public interface IMessageHandler
     {
-        Task Handle(BaseMessage message);
+        Task HandleAsync(BaseMessage message);
     }
 }

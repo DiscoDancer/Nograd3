@@ -45,7 +45,7 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
                 {
                     throw new Exception("Failed to serialized a message");
                 }
-                _messageHandler.Handle(message);
+                _messageHandler.HandleAsync(message);
             }
             catch (Exception e)
             {

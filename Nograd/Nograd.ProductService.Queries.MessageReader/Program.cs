@@ -1,10 +1,10 @@
 using Nograd.ProductService.Queries.MessageConsumer;
+using Nograd.ProductService.Queries.MessageConsumer.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<KafkaConfig>(builder.Configuration.GetSection(nameof(KafkaConfig)));
 
-builder.Services.AddScoped<IKafkaMessageConsumer, KafkaMessageConsumer>();
+builder.UseInfrastructure();
 
 builder.Services.AddHostedService<ConsumerHostedService>();
 

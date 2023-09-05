@@ -1,12 +1,33 @@
-﻿namespace Nograd.ProductServices.KafkaMessages;
+﻿using System.Text.Json.Serialization;
 
-public sealed record ProductUpdatedMessage(
-    string Name,
-    string Description,
-    string Category,
-    decimal Price,
-    Guid ProductId
-) : BaseMessage
+namespace Nograd.ProductServices.KafkaMessages;
+
+public sealed class ProductUpdatedMessage : BaseMessage
 {
-    public override string TypeName => nameof(ProductUpdatedMessage);
+    public ProductUpdatedMessage(
+        string name,
+        string description,
+        string category,
+        decimal price,
+        Guid productId)
+    {
+        Name = name;
+        Description = description;
+        Category = category;
+        Price = price;
+        ProductId = productId;
+        TypeName = nameof(ProductUpdatedMessage);
+    }
+
+    [JsonConstructorAttribute]
+    public ProductUpdatedMessage()
+    {
+    }
+
+
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public string? Category { get; set; }
+    public decimal? Price { get; set; }
+    public Guid? ProductId { get; set; }
 }

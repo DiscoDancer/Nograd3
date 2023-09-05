@@ -10,11 +10,19 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventNotifications
         {
             return @event switch
             {
-                ProductCreatedEvent ev => new ProductCreatedMessage(Name: ev.Name, Description: ev.Description,
-                    Category: ev.Category, ProductId: ev.ProductId, Price: ev.Price),
-                ProductUpdatedEvent ev => new ProductUpdatedMessage(Name: ev.Name, Description: ev.Description,
-                    Category: ev.Category, ProductId: ev.ProductId, Price: ev.Price),
-                ProductRemovedEvent ev => new ProductRemovedMessage(ProductId: ev.ProductId),
+                ProductCreatedEvent ev => new ProductCreatedMessage(
+                    name: ev.Name,
+                    description: ev.Description,
+                    category: ev.Category,
+                    productId: ev.ProductId,
+                    price: ev.Price),
+                ProductUpdatedEvent ev => new ProductUpdatedMessage(
+                    name: ev.Name,
+                    description: ev.Description,
+                    category: ev.Category,
+                    productId: ev.ProductId,
+                    price: ev.Price),
+                ProductRemovedEvent ev => new ProductRemovedMessage(productId: ev.ProductId),
                 _ => throw new NotImplementedException()
             };
         }

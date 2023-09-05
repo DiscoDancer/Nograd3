@@ -1,6 +1,6 @@
 ﻿namespace Nograd.ProductServices.KafkaMessages;
 
-public abstract record BaseMessage()
+public abstract class BaseMessage
 {
-    public abstract string TypeName { get; }
+    public string? TypeName { get; set; }
 }

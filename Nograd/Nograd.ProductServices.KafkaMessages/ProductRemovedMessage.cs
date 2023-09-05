@@ -1,6 +1,19 @@
-﻿namespace Nograd.ProductServices.KafkaMessages;
+﻿using System.Text.Json.Serialization;
 
-public sealed record ProductRemovedMessage(Guid ProductId) : BaseMessage
+namespace Nograd.ProductServices.KafkaMessages;
+
+public sealed class ProductRemovedMessage : BaseMessage
 {
-    public override string TypeName => nameof(ProductRemovedMessage);
+    public ProductRemovedMessage(Guid productId)
+    {
+        ProductId = productId;
+        TypeName = nameof(ProductRemovedMessage);
+    }
+
+    [JsonConstructorAttribute]
+    public ProductRemovedMessage()
+    {
+    }
+
+    public Guid? ProductId { get; set; }
 }

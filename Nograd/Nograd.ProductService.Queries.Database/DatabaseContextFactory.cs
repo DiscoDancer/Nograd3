@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRepository
+namespace Nograd.ProductService.Queries.Persistence
 {
     public sealed class DatabaseContextFactory
     {

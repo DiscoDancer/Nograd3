@@ -1,4 +1,4 @@
-﻿using Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRepository;
+﻿using Nograd.ProductService.Queries.Persistence;
 using Nograd.ProductServices.KafkaMessages;
 
 namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;

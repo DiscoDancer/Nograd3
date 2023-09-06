@@ -8,11 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nograd.ProductService.Queries.Database\Nograd.ProductService.Queries.Persistence.csproj" />
     <ProjectReference Include="..\Nograd.ProductServices.KafkaMessages\Nograd.ProductServices.KafkaMessages.csproj" />
   </ItemGroup>
 

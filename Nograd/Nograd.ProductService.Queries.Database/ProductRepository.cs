@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRepository
+namespace Nograd.ProductService.Queries.Persistence
 {
     public sealed class ProductRepository: IProductRepository
     {
@@ -43,6 +43,13 @@ namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRe
             await using var context = _contextFactory.CreateDbContext();
             return await context.Products
                 .FirstOrDefaultAsync(x => x.ProductId == productId);
+        }
+
+        public async Task<List<ProductEntity>> ListAllAsync()
+        {
+            await using var context = _contextFactory.CreateDbContext();
+            return await context.Products.AsNoTracking()
+                .ToListAsync();
         }
     }
 }

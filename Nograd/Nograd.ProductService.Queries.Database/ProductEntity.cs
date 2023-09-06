@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRepository
+#pragma warning disable CS8618
+
+namespace Nograd.ProductService.Queries.Persistence
 {
     [Table("Product")]
     public class ProductEntity

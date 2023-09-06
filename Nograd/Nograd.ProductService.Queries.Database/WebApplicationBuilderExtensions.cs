@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRepository
+namespace Nograd.ProductService.Queries.Persistence
 {
     public static class WebApplicationBuilderExtensions
     {
@@ -14,7 +17,7 @@ namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.ProductRe
             dataContext.Database.EnsureCreated();
 
             builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IProductRepository, Persistence.ProductRepository>();
         }
     }
 }

@@ -5,9 +5,9 @@ namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaCons
 
 public sealed class MessageHandler : IMessageHandler
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IWriteProductRepository _productRepository;
 
-    public MessageHandler(IProductRepository productRepository)
+    public MessageHandler(IWriteProductRepository productRepository)
     {
         _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
@@ -67,14 +67,15 @@ public sealed class MessageHandler : IMessageHandler
             throw new ArgumentNullException(nameof(message.ProductId));
         if (message.Price == null || message.Price <= 0) throw new ArgumentNullException(nameof(message.Price));
 
-        var product = await _productRepository.GetByIdAsync(message.ProductId.Value);
-        if (product == null) throw new Exception("Can't find the product to update.");
 
-        product.Category = message.Category;
-        product.Description = message.Description;
-        product.Name = message.Name;
-        product.Price = message.Price.Value;
-
+        var product = new ProductEntity
+        {
+            ProductId = message.ProductId.Value,
+            Category = message.Category,
+            Description = message.Description,
+            Name = message.Name,
+            Price = message.Price.Value
+        };
         await _productRepository.UpdateAsync(product);
     }
 

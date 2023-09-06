@@ -5,9 +5,9 @@ namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts
 {
     public sealed class GetAllProductsHandler: IRequestHandler<GetAllProductsQuery, IEnumerable<ProductEntity>>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IReadProductRepository _productRepository;
 
-        public GetAllProductsHandler(IProductRepository productRepository)
+        public GetAllProductsHandler(IReadProductRepository productRepository)
         {
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         }

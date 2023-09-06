@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.UseProductRepository();
+builder.UseReadProductRepository();
 builder.UseGetAllProductsFeature();
 
 var app = builder.Build();

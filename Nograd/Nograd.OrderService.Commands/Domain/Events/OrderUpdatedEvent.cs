@@ -7,5 +7,5 @@
         bool IsGift,
         string CustomerName,
         string CustomerAddress
-    );
+    ): BaseEvent;
 }

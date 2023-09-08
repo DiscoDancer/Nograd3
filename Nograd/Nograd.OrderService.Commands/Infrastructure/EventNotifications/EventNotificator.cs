@@ -7,6 +7,6 @@ public sealed class EventNotificator : IEventNotificator
 {
     public Task Notify(BaseEvent @event)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 }

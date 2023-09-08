@@ -2,7 +2,7 @@
 
 namespace Nograd.ProductService.Commands.Domain
 {
-    public record Product (Guid Id, ProductLifecycleStates State)
+    public sealed record Product (Guid Id, ProductLifecycleStates State)
     {
         public static Product GetNotCreatedProduct()
         {

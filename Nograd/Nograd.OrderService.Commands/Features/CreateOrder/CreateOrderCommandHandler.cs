@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Nograd.OrderService.Commands.Domain;
+using Nograd.OrderService.Commands.Domain.Events;
 
 namespace Nograd.OrderService.Commands.Features.CreateOrder
 {
@@ -12,9 +13,27 @@ namespace Nograd.OrderService.Commands.Features.CreateOrder
             _eventHandlingStrategy = eventHandlingStrategy ?? throw new ArgumentNullException(nameof(eventHandlingStrategy));
         }
 
-        public Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var order = Order.GetNotCreatedOrder();
+
+            var productQuantities = command.ProductQuantities
+                .Select(x => new OrderCreatedEventProductQuantity(
+                    ProductId: x.ProductId,
+                    Quantity: x.Quantity))
+                .ToArray();
+
+            var orderCreatedEvent = OrderEventProducer.Create(
+                order: order,
+                customerName: command.CustomerName,
+                customerAddress: command.CustomerAddress,
+                orderId: command.OrderId,
+                isGift: command.IsGift,
+                isShipped: command.IsShipped,
+                productQuantities: productQuantities);
+
+
+            await _eventHandlingStrategy.HandleAsync(orderCreatedEvent, command.OrderId);
         }
     }
 }

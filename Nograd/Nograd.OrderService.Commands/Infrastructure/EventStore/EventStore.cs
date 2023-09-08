@@ -7,7 +7,7 @@ public sealed class EventStore : IEventStore
 {
     public Task SaveEventAsync(BaseEvent @event, Guid orderId)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     public Task<List<BaseEvent>> GetEventsAsync(Guid orderId)

@@ -19,7 +19,7 @@ public sealed class ProductCreatedMessage : BaseMessage
         TypeName = nameof(ProductCreatedMessage);
     }
 
-    [JsonConstructorAttribute]
+    [JsonConstructor]
     public ProductCreatedMessage()
     {
     }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Nograd.ProductService.Queries.Persistence.Context;
+using Nograd.ProductService.Queries.Persistence.Entities;
 
-namespace Nograd.ProductService.Queries.Persistence;
+namespace Nograd.ProductService.Queries.Persistence.Repositories;
 
 public sealed class ReadProductRepository : IReadProductRepository
 {

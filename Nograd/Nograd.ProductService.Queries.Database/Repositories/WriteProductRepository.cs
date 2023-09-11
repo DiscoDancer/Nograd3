@@ -1,4 +1,7 @@
-﻿namespace Nograd.ProductService.Queries.Persistence;
+﻿using Nograd.ProductService.Queries.Persistence.Context;
+using Nograd.ProductService.Queries.Persistence.Entities;
+
+namespace Nograd.ProductService.Queries.Persistence.Repositories;
 
 public sealed class WriteProductRepository : IWriteProductRepository
 {

@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nograd.ProductService.Queries.Persistence.Context;
+using Nograd.ProductService.Queries.Persistence.Repositories;
 
 namespace Nograd.ProductService.Queries.Persistence;
 

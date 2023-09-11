@@ -1,5 +1,6 @@
 ﻿using MediatR;
-using Nograd.ProductService.Queries.Persistence;
+using Nograd.ProductService.Queries.Persistence.Entities;
+using Nograd.ProductService.Queries.Persistence.Repositories;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts
 {

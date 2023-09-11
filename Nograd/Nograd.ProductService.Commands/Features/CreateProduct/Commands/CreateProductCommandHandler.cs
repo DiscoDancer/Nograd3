@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
 
-namespace Nograd.ProductService.Commands.Features.CreateProduct;
+namespace Nograd.ProductService.Commands.Features.CreateProduct.Commands;
 
 public sealed class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
 {

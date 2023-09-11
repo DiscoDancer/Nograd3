@@ -1,4 +1,4 @@
-﻿namespace Nograd.ProductService.Commands.Features.CreateProduct;
+﻿namespace Nograd.ProductService.Commands.Features.CreateProduct.Controllers;
 
 public sealed class CreateProductControllerInput
 {

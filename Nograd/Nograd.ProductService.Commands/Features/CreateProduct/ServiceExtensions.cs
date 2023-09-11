@@ -1,4 +1,6 @@
-﻿namespace Nograd.ProductService.Commands.Features.CreateProduct
+﻿using Nograd.ProductService.Commands.Features.CreateProduct.Mappers;
+
+namespace Nograd.ProductService.Commands.Features.CreateProduct
 {
     public static class ServiceExtensions
     {

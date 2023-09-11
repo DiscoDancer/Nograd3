@@ -1,4 +1,7 @@
-﻿namespace Nograd.ProductService.Commands.Features.CreateProduct;
+﻿using Nograd.ProductService.Commands.Features.CreateProduct.Commands;
+using Nograd.ProductService.Commands.Features.CreateProduct.Controllers;
+
+namespace Nograd.ProductService.Commands.Features.CreateProduct.Mappers;
 
 public class CreateProductControllerInputToCommandMapper : ICreateProductControllerInputToCommandMapper
 {

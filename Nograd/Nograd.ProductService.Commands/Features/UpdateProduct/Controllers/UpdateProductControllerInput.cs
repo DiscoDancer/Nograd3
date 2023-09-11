@@ -1,4 +1,4 @@
-﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct;
+﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct.Controllers;
 
 public sealed class UpdateProductControllerInput
 {

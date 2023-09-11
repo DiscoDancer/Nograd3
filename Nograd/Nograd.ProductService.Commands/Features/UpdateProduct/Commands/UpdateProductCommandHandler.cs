@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Nograd.ProductService.Commands.Domain;
 
-namespace Nograd.ProductService.Commands.Features.UpdateProduct;
+namespace Nograd.ProductService.Commands.Features.UpdateProduct.Commands;
 
 public sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
 {

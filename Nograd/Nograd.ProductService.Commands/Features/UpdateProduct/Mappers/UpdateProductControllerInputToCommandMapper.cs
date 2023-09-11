@@ -1,4 +1,7 @@
-﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct;
+﻿using Nograd.ProductService.Commands.Features.UpdateProduct.Commands;
+using Nograd.ProductService.Commands.Features.UpdateProduct.Controllers;
+
+namespace Nograd.ProductService.Commands.Features.UpdateProduct.Mappers;
 
 public sealed class
     UpdateProductControllerInputToCommandMapper : IUpdateProductControllerInputToCommandMapper

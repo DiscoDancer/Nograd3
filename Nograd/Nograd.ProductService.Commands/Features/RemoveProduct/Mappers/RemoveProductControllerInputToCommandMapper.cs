@@ -1,4 +1,7 @@
-﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct;
+﻿using Nograd.ProductService.Commands.Features.RemoveProduct.Commands;
+using Nograd.ProductService.Commands.Features.RemoveProduct.Controllers;
+
+namespace Nograd.ProductService.Commands.Features.RemoveProduct.Mappers;
 
 public sealed class RemoveProductControllerInputToCommandMapper : IRemoveProductControllerInputToCommandMapper
 {

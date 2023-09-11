@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Nograd.ProductService.Commands.Features.RemoveProduct.Mappers;
 
-namespace Nograd.ProductService.Commands.Features.RemoveProduct;
+namespace Nograd.ProductService.Commands.Features.RemoveProduct.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]

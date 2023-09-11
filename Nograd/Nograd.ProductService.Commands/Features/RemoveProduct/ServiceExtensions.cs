@@ -1,4 +1,6 @@
-﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct;
+﻿using Nograd.ProductService.Commands.Features.RemoveProduct.Mappers;
+
+namespace Nograd.ProductService.Commands.Features.RemoveProduct;
 
 public static class ServiceExtensions
 {

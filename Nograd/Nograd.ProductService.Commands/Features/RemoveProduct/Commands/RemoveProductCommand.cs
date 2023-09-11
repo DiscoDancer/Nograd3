@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Nograd.ProductService.Commands.Features.RemoveProduct;
+namespace Nograd.ProductService.Commands.Features.RemoveProduct.Commands;
 
 public sealed class RemoveProductCommand : IRequest
 {

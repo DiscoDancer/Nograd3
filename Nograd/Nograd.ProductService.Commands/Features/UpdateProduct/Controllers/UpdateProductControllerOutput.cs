@@ -1,8 +1,8 @@
-﻿namespace Nograd.ProductService.Commands.Features.CreateProduct
+﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct.Controllers
 {
-    public sealed class CreateProductControllerOutput
+    public sealed class UpdateProductControllerOutput
     {
-        public CreateProductControllerOutput(Guid id, string message)
+        public UpdateProductControllerOutput(Guid? id, string message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -13,7 +13,7 @@
             Message = message;
         }
 
-        public Guid ProductId { get; }
+        public Guid? ProductId { get; }
         public string Message { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct;
+﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct.Controllers;
 
 public sealed class RemoveProductControllerInput
 {

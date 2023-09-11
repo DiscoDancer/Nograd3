@@ -1,4 +1,7 @@
-﻿namespace Nograd.OrderService.Commands.Features.CreateOrder
+﻿using Nograd.OrderService.Commands.Features.CreateOrder.Commands;
+using Nograd.OrderService.Commands.Features.CreateOrder.Controllers;
+
+namespace Nograd.OrderService.Commands.Features.CreateOrder.Mappers
 {
     public sealed class CreateOrderControllerInputToCommandMapper : ICreateOrderControllerInputToCommandMapper
     {

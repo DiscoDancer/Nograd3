@@ -15,7 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\UpdateOrder\" />
 	  <Folder Include="Features\RemoveOrder\" />
 	</ItemGroup>
 

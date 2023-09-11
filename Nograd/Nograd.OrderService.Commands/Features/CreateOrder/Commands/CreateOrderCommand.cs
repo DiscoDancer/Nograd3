@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace Nograd.OrderService.Commands.Features.CreateOrder
+namespace Nograd.OrderService.Commands.Features.CreateOrder.Commands
 {
-    public sealed class CreateOrderCommand: IRequest
+    public sealed class CreateOrderCommand : IRequest
     {
         public CreateOrderCommand(
             IReadOnlyCollection<CreateOrderCommandProductQuantity> productQuantities,

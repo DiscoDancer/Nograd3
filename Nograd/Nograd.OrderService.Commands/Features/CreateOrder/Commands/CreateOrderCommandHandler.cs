@@ -2,7 +2,7 @@
 using Nograd.OrderService.Commands.Domain;
 using Nograd.OrderService.Commands.Domain.Events;
 
-namespace Nograd.OrderService.Commands.Features.CreateOrder
+namespace Nograd.OrderService.Commands.Features.CreateOrder.Commands
 {
     public sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
     {

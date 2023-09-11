@@ -1,8 +1,8 @@
-﻿namespace Nograd.OrderService.Commands.Features.CreateOrder
+﻿namespace Nograd.OrderService.Commands.Features.CreateOrder.Commands
 {
     public sealed class CreateOrderCommandProductQuantity
     {
-        public CreateOrderCommandProductQuantity (Guid productId, int quantity)
+        public CreateOrderCommandProductQuantity(Guid productId, int quantity)
         {
             if (productId == Guid.Empty) throw new ArgumentException(nameof(productId));
             if (quantity <= 0) throw new ArgumentException(nameof(quantity));

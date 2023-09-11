@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Nograd.OrderService.Commands.Features.CreateOrder.Mappers;
 
-namespace Nograd.OrderService.Commands.Features.CreateOrder
+namespace Nograd.OrderService.Commands.Features.CreateOrder.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

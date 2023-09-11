@@ -1,4 +1,4 @@
-﻿namespace Nograd.OrderService.Commands.Features.CreateOrder
+﻿namespace Nograd.OrderService.Commands.Features.CreateOrder.Controllers
 {
     public sealed class CreateOrderControllerInputProductQuantity
     {

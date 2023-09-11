@@ -15,10 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\RemoveOrder\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\Nograd.OrderService.KafkaMessages\Nograd.OrderService.KafkaMessages.csproj" />
 	</ItemGroup>
 

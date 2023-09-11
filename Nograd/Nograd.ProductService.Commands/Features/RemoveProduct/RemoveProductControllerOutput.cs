@@ -1,19 +1,15 @@
-﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct
+﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct;
+
+public sealed class RemoveProductControllerOutput
 {
-    public sealed class RemoveProductControllerOutput
+    public RemoveProductControllerOutput(Guid? id, string message)
     {
-        public RemoveProductControllerOutput(Guid? id, string message)
-        {
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+        if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
 
-            ProductId = id;
-            Message = message;
-        }
-
-        public Guid? ProductId { get; }
-        public string Message { get; }
+        ProductId = id;
+        Message = message;
     }
+
+    public Guid? ProductId { get; }
+    public string Message { get; }
 }

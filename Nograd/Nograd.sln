@@ -19,7 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderService", "OrderServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.OrderService.Commands", "Nograd.OrderService.Commands\Nograd.OrderService.Commands.csproj", "{D4B1B510-6BE8-4FF3-AE84-04A57432C2A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.OrderService.KafkaMessages", "Nograd.OrderService.KafkaMessages\Nograd.OrderService.KafkaMessages.csproj", "{C9A9FB05-36F9-438B-8483-11638D40E053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.OrderService.KafkaMessages", "Nograd.OrderService.KafkaMessages\Nograd.OrderService.KafkaMessages.csproj", "{C9A9FB05-36F9-438B-8483-11638D40E053}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.OrderService.Queries.Persistence", "Nograd.OrderService.Queries.Persistence\Nograd.OrderService.Queries.Persistence.csproj", "{74DA2D9D-CC91-4806-8C38-34E29462A165}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.OrderService.ConsoleApp", "Nograd.OrderService.ConsoleApp\Nograd.OrderService.ConsoleApp.csproj", "{34457A53-3B14-4315-930D-2CC070605344}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,14 @@ Global
 		{C9A9FB05-36F9-438B-8483-11638D40E053}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9A9FB05-36F9-438B-8483-11638D40E053}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9A9FB05-36F9-438B-8483-11638D40E053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74DA2D9D-CC91-4806-8C38-34E29462A165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74DA2D9D-CC91-4806-8C38-34E29462A165}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74DA2D9D-CC91-4806-8C38-34E29462A165}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74DA2D9D-CC91-4806-8C38-34E29462A165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34457A53-3B14-4315-930D-2CC070605344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34457A53-3B14-4315-930D-2CC070605344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34457A53-3B14-4315-930D-2CC070605344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34457A53-3B14-4315-930D-2CC070605344}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +79,8 @@ Global
 		{ED7BB340-5DF5-47FA-8206-D1E9889849BA} = {D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}
 		{D4B1B510-6BE8-4FF3-AE84-04A57432C2A3} = {162CD1B1-C8BB-4C41-B272-DFDB4D06D0F0}
 		{C9A9FB05-36F9-438B-8483-11638D40E053} = {162CD1B1-C8BB-4C41-B272-DFDB4D06D0F0}
+		{74DA2D9D-CC91-4806-8C38-34E29462A165} = {162CD1B1-C8BB-4C41-B272-DFDB4D06D0F0}
+		{34457A53-3B14-4315-930D-2CC070605344} = {162CD1B1-C8BB-4C41-B272-DFDB4D06D0F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B414F3A4-26BD-404B-8F95-680146698F54}

@@ -22,9 +22,6 @@ public sealed class WriteOrderRepository : IWriteOrderRepository
 
     public async Task UpdateAsync(OrderEntity order)
     {
-        var foundOrder = await GetByIdAsync(order.OrderId);
-        if (foundOrder == null) throw new Exception("order not found");
-
         await RemoveAsync(order.OrderId);
         await CreateAsync(order);
     }
@@ -35,6 +32,7 @@ public sealed class WriteOrderRepository : IWriteOrderRepository
         if (foundOrder == null) throw new Exception("order not found");
 
         await using var context = await _contextFactory.CreateDbContextAsync();
+        context.Orders.Remove(foundOrder);
         _ = await context.SaveChangesAsync();
     }
 

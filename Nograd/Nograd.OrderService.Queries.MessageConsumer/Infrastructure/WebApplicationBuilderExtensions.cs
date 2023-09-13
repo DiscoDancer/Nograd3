@@ -1,6 +1,6 @@
-﻿using Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+﻿using Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure;
+namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure;
 
 public static class WebApplicationBuilderExtensions
 {

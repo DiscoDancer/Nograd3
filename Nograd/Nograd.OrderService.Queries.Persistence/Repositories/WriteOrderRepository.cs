@@ -1,29 +1,28 @@
-﻿using Nograd.OrderService.Queries.Persistence.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Nograd.OrderService.Queries.Persistence.Context;
 using Nograd.OrderService.Queries.Persistence.Entities;
 
 namespace Nograd.OrderService.Queries.Persistence.Repositories;
 
 public sealed class WriteOrderRepository : IWriteOrderRepository
 {
-    private readonly DatabaseContext _databaseContext;
-    private readonly IReadOrderRepository _readOrderRepository;
+    private readonly IDbContextFactory<DatabaseContext> _contextFactory;
 
-    public WriteOrderRepository(DatabaseContext databaseContext, IReadOrderRepository readOrderRepository)
+    public WriteOrderRepository(IDbContextFactory<DatabaseContext> contextFactory)
     {
-        _databaseContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
-        _readOrderRepository = readOrderRepository ?? throw new ArgumentNullException(nameof(readOrderRepository));
+        _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
     }
 
     public async Task CreateAsync(OrderEntity order)
     {
-        _databaseContext.Orders.Add(order);
-
-        _ = await _databaseContext.SaveChangesAsync();
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        context.Orders.Add(order);
+        _ = await context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(OrderEntity order)
     {
-        var foundOrder = await _readOrderRepository.GetByIdAsync(order.OrderId);
+        var foundOrder = await GetByIdAsync(order.OrderId);
         if (foundOrder == null) throw new Exception("order not found");
 
         await RemoveAsync(order.OrderId);
@@ -32,10 +31,20 @@ public sealed class WriteOrderRepository : IWriteOrderRepository
 
     public async Task RemoveAsync(Guid orderId)
     {
-        var foundOrder = await _readOrderRepository.GetByIdAsync(orderId);
+        var foundOrder = await GetByIdAsync(orderId);
         if (foundOrder == null) throw new Exception("order not found");
 
-        _databaseContext.Orders.Remove(foundOrder);
-        _ = await _databaseContext.SaveChangesAsync();
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        _ = await context.SaveChangesAsync();
+    }
+
+    private async Task<OrderEntity?> GetByIdAsync(Guid orderId)
+    {
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        return await context
+            .Orders
+            .Include(x => x.ProductQuantities)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.OrderId == orderId);
     }
 }

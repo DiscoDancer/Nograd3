@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using Confluent.Kafka;
 using Microsoft.Extensions.Options;
-using Nograd.ProductServices.KafkaMessages;
+using Nograd.OrderService.KafkaMessages;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 
 public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
 {
@@ -18,7 +18,8 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
         if (config == null) throw new ArgumentNullException(nameof(config));
         if (string.IsNullOrWhiteSpace(config.Value.Topic)) throw new ArgumentNullException(nameof(config.Value.Topic));
 
-        _consumerConfig = config.Value.ConsumerConfig ?? throw new ArgumentNullException(nameof(config.Value.ConsumerConfig));
+        _consumerConfig = config.Value.ConsumerConfig ??
+                          throw new ArgumentNullException(nameof(config.Value.ConsumerConfig));
         _topicName = config.Value.Topic;
         _messageHandler = messageHandler ?? throw new ArgumentNullException(nameof(messageHandler));
     }
@@ -39,10 +40,7 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
 
             var options = new JsonSerializerOptions { Converters = { new MessageJsonConverter() } };
             var message = JsonSerializer.Deserialize<BaseMessage>(consumeResult.Message.Value, options);
-            if (message == null)
-            {
-                throw new Exception("Failed to serialized a message");
-            }
+            if (message == null) throw new Exception("Failed to serialized a message");
             _messageHandler.HandleAsync(message);
 
             consumer.Commit(consumeResult);

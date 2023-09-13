@@ -6,16 +6,17 @@ namespace Nograd.OrderService.Queries.Persistence.Repositories;
 
 public sealed class ReadOrderRepository : IReadOrderRepository
 {
-    private readonly DatabaseContext _databaseContext;
+    private readonly IDbContextFactory<DatabaseContext> _contextFactory;
 
-    public ReadOrderRepository(DatabaseContext databaseContext)
+    public ReadOrderRepository(IDbContextFactory<DatabaseContext> contextFactory)
     {
-        _databaseContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
+        _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
     }
 
     public async Task<OrderEntity?> GetByIdAsync(Guid orderId)
     {
-        return await _databaseContext
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        return await context
             .Orders
             .Include(x => x.ProductQuantities)
             .AsNoTracking()
@@ -24,7 +25,8 @@ public sealed class ReadOrderRepository : IReadOrderRepository
 
     public async Task<List<OrderEntity>> ListAllAsync()
     {
-        return await _databaseContext
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        return await context
             .Orders
             .Include(x => x.ProductQuantities)
             .AsNoTracking()

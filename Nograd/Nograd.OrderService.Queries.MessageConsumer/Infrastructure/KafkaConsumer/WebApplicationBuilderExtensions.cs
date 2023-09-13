@@ -1,12 +1,13 @@
-﻿using Nograd.ProductService.Queries.Persistence;
+﻿using Nograd.OrderService.Queries.Persistence;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 
 public static class WebApplicationBuilderExtensions
 {
     public static void UseKafkaConsumer(this WebApplicationBuilder builder)
     {
-        builder.UseWriteProductRepository();
+        builder.UseWriteOrderRepository();
+
 
         builder.Services.Configure<KafkaConfig>(builder.Configuration.GetSection(nameof(KafkaConfig)));
 

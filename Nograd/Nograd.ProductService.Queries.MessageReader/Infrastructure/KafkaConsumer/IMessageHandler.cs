@@ -1,9 +1,8 @@
 ﻿using Nograd.ProductServices.KafkaMessages;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer
+namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+
+public interface IMessageHandler
 {
-    public interface IMessageHandler
-    {
-        Task HandleAsync(BaseMessage message);
-    }
+    Task HandleAsync(BaseMessage message);
 }

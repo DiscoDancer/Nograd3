@@ -12,5 +12,4 @@ public sealed class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlServer("Server=localhost,3333;Database=Nograd3.Orders;User Id=sa;Password=$tr0ngS@P@ssw0rd02;TrustServerCertificate=true;");
 
-    //public DbSet<ProductQuantityEntity> ProductQuantities { get; set; }
 }

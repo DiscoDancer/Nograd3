@@ -1,4 +1,4 @@
-﻿using Nograd.ProductService.Queries.Persistence;
+﻿using Nograd.ProductService.Queries.Persistence.Entities;
 using Nograd.ProductService.Queries.Persistence.Repositories;
 using Nograd.ProductServices.KafkaMessages;
 
@@ -35,26 +35,16 @@ public sealed class MessageHandler : IMessageHandler
             throw new ArgumentNullException(nameof(message.ProductId));
         if (message.Price == null || message.Price <= 0) throw new ArgumentNullException(nameof(message.Price));
 
-        try
+        var product = new ProductEntity
         {
-            var product = new ProductEntity
-            {
-                Category = message.Category,
-                Description = message.Description,
-                Name = message.Name,
-                Price = message.Price.Value,
-                ProductId = message.ProductId.Value
-            };
+            Category = message.Category,
+            Description = message.Description,
+            Name = message.Name,
+            Price = message.Price.Value,
+            ProductId = message.ProductId.Value
+        };
 
-            await _productRepository.CreateAsync(product);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-
+        await _productRepository.CreateAsync(product);
     }
 
     private async Task HandleAsync(ProductUpdatedMessage message)

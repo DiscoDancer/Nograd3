@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 
 public sealed class KafkaConfig
 {

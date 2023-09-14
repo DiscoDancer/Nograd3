@@ -39,7 +39,7 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
             if (consumeResult?.Message == null) continue;
 
             var options = new JsonSerializerOptions { Converters = { new MessageJsonConverter() } };
-            var message = JsonSerializer.Deserialize<BaseMessage>(consumeResult.Message.Value, options);
+            var message = JsonSerializer.Deserialize<OrderBaseMessage>(consumeResult.Message.Value, options);
             if (message == null) throw new Exception("Failed to serialized a message");
             _messageHandler.HandleAsync(message);
 

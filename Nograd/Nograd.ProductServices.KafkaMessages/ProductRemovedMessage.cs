@@ -2,7 +2,7 @@
 
 namespace Nograd.ProductServices.KafkaMessages;
 
-public sealed class ProductRemovedMessage : BaseMessage
+public sealed class ProductRemovedMessage : ProductBaseMessage
 {
     public ProductRemovedMessage(Guid productId)
     {

@@ -5,6 +5,6 @@ namespace Nograd.OrderService.Commands.Domain
 {
     public interface IEventToMessageMapper
     {
-        BaseMessage Map(BaseEvent @event);
+        OrderBaseMessage Map(BaseEvent @event);
     }
 }

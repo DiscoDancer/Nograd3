@@ -2,7 +2,7 @@
 
 namespace Nograd.OrderService.KafkaMessages;
 
-public sealed class OrderUpdatedMessage : BaseMessage
+public sealed class OrderUpdatedMessage : OrderBaseMessage
 {
     public OrderUpdatedMessage(
         string customerName,

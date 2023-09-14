@@ -4,14 +4,14 @@ using Nograd.ProductServices.KafkaMessages;
 
 namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 
-public sealed class MessageJsonConverter : JsonConverter<BaseMessage>
+public sealed class MessageJsonConverter : JsonConverter<ProductBaseMessage>
 {
     public override bool CanConvert(Type typeToConvert)
     {
-        return typeToConvert.IsAssignableFrom(typeof(BaseMessage));
+        return typeToConvert.IsAssignableFrom(typeof(ProductBaseMessage));
     }
 
-    public override BaseMessage? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions? options)
+    public override ProductBaseMessage? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions? options)
     {
         if (!JsonDocument.TryParseValue(ref reader, out var doc))
             throw new JsonException($"Failed to parse {nameof(JsonDocument)}!");
@@ -31,7 +31,7 @@ public sealed class MessageJsonConverter : JsonConverter<BaseMessage>
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, BaseMessage value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, ProductBaseMessage value, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }

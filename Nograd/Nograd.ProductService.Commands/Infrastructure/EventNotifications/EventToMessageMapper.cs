@@ -6,7 +6,7 @@ namespace Nograd.ProductService.Commands.Infrastructure.EventNotifications
 {
     public sealed class EventToMessageMapper: IEventToMessageMapper
     {
-        public BaseMessage Map(BaseEvent @event)
+        public ProductBaseMessage Map(BaseEvent @event)
         {
             return @event switch
             {

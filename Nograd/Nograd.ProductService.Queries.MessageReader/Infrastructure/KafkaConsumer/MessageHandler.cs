@@ -13,7 +13,7 @@ public sealed class MessageHandler : IMessageHandler
         _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
-    public Task HandleAsync(BaseMessage message)
+    public Task HandleAsync(ProductBaseMessage message)
     {
         return message switch
         {

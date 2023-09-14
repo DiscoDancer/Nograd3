@@ -5,6 +5,6 @@ namespace Nograd.ProductService.Commands.Domain
 {
     public interface IEventToMessageMapper
     {
-        BaseMessage Map(BaseEvent @event);
+        ProductBaseMessage Map(BaseEvent @event);
     }
 }

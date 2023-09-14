@@ -6,7 +6,7 @@ namespace Nograd.OrderService.Commands.Infrastructure.EventNotifications;
 
 public sealed class EventToMessageMapper : IEventToMessageMapper
 {
-    public BaseMessage Map(BaseEvent @event)
+    public OrderBaseMessage Map(BaseEvent @event)
     {
         return @event switch
         {

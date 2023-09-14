@@ -2,7 +2,7 @@
 
 namespace Nograd.OrderService.KafkaMessages;
 
-public sealed class OrderRemovedMessage : BaseMessage
+public sealed class OrderRemovedMessage : OrderBaseMessage
 {
     public OrderRemovedMessage(Guid orderId)
     {

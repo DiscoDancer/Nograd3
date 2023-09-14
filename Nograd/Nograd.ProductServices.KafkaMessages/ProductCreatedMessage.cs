@@ -2,7 +2,7 @@
 
 namespace Nograd.ProductServices.KafkaMessages;
 
-public sealed class ProductCreatedMessage : BaseMessage
+public sealed class ProductCreatedMessage : ProductBaseMessage
 {
     public ProductCreatedMessage(
         string name,

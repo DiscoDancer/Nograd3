@@ -1,6 +1,6 @@
 ﻿using Nograd.OrderService.Queries.Persistence.Entities;
 
-namespace Nograd.OrderService.Queries.Persistence.Repositories;
+namespace Nograd.OrderService.Queries.Persistence.Repositories.Order;
 
 public interface IWriteOrderRepository
 {

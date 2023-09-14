@@ -16,4 +16,9 @@
 	  <ProjectReference Include="..\Nograd.OrderService.Queries.Persistence\Nograd.OrderService.Queries.Persistence.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Infrastructure\KafkaConsumer\Product\" />
+	  <Folder Include="Infrastructure\KafkaConsumer\Order\" />
+	</ItemGroup>
+
 </Project>

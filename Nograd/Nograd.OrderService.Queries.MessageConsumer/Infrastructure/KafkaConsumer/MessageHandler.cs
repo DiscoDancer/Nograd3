@@ -1,6 +1,6 @@
 ﻿using Nograd.OrderService.KafkaMessages;
 using Nograd.OrderService.Queries.Persistence.Entities;
-using Nograd.OrderService.Queries.Persistence.Repositories;
+using Nograd.OrderService.Queries.Persistence.Repositories.Order;
 
 namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 

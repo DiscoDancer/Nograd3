@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Nograd.OrderService.Queries.Persistence.Entities;
-using Nograd.OrderService.Queries.Persistence.Repositories;
+using Nograd.OrderService.Queries.Persistence.Repositories.Order;
 
 namespace Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Queries;
 

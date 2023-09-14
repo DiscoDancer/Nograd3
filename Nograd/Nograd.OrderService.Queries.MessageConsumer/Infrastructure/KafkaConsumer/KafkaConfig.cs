@@ -5,5 +5,6 @@ namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsum
 public sealed class KafkaConfig
 {
     public ConsumerConfig? ConsumerConfig { get; set; }
-    public string? Topic { get; set; }
+    public string? OrderTopic { get; set; }
+    public string? ProductTopic { get; set; }
 }

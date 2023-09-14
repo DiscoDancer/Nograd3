@@ -7,7 +7,7 @@ public static class WebApplicationBuilderExtensions
 {
     public static void UseGetAllOrdersFeature(this WebApplicationBuilder builder)
     {
-        builder.UseReadOrderRepository();
+        builder.UseReadRepositories();
         builder.Services.AddScoped<IGetAllOrdersMapper, GetAllOrdersMapper>();
     }
 }

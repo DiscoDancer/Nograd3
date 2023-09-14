@@ -9,7 +9,7 @@ namespace Nograd.OrderService.Queries.Persistence;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static void UseReadOrderRepository(this WebApplicationBuilder builder)
+    public static void UseReadRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContextFactory<DatabaseContext>();
 
@@ -21,7 +21,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IReadProductRepository, ReadProductRepository>();
     }
 
-    public static void UseWriteOrderRepository(this WebApplicationBuilder builder)
+    public static void UseWriteRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContextFactory<DatabaseContext>();
 

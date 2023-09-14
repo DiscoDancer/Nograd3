@@ -1,16 +1,19 @@
 ﻿using Nograd.OrderService.KafkaMessages;
 using Nograd.OrderService.Queries.Persistence.Entities;
 using Nograd.OrderService.Queries.Persistence.Repositories.Order;
+using Nograd.OrderService.Queries.Persistence.Repositories.Product;
 
-namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer.Order;
 
-public sealed class MessageHandler : IMessageHandler
+public sealed class OrderMessageHandler : IOrderMessageHandler
 {
     private readonly IWriteOrderRepository _orderRepository;
+    private readonly IReadProductRepository _productRepository;
 
-    public MessageHandler(IWriteOrderRepository orderRepository)
+    public OrderMessageHandler(IWriteOrderRepository orderRepository, IReadProductRepository productRepository)
     {
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
     public Task HandleAsync(OrderBaseMessage message)
@@ -38,10 +41,22 @@ public sealed class MessageHandler : IMessageHandler
 
         try
         {
-            var productQuantities = message
-                .ProductQuantities
-                .Select(x => new ProductQuantityEntity { ProductId = x.ProductId!.Value, Quantity = x.Quantity!.Value })
-                .ToList();
+
+            var productQuantities = new List<ProductQuantityEntity>();
+            foreach (var pq in message.ProductQuantities)
+            {
+                var productId = pq.ProductId!.Value;
+                var quantity = pq.Quantity!.Value;
+
+                var product = await _productRepository.GetByIdAsync(productId);
+                if (product == null) throw new Exception($"Can't find product by id {productId}");
+
+                productQuantities.Add(new ProductQuantityEntity()
+                {
+                    Product = product,
+                    Quantity = quantity,
+                });
+            }
 
             var order = new OrderEntity
             {
@@ -76,10 +91,21 @@ public sealed class MessageHandler : IMessageHandler
         if (message.ProductQuantities == null) throw new ArgumentNullException(nameof(message.ProductQuantities));
         if (message.ProductQuantities.Any(x => x?.ProductId == null || x.ProductId == Guid.Empty || x.Quantity == null || x.Quantity <= 0)) throw new ArgumentNullException(nameof(message.ProductQuantities));
 
-        var productQuantities = message
-            .ProductQuantities
-            .Select(x => new ProductQuantityEntity { ProductId = x.ProductId!.Value, Quantity = x.Quantity!.Value })
-            .ToList();
+        var productQuantities = new List<ProductQuantityEntity>();
+        foreach (var pq in message.ProductQuantities)
+        {
+            var productId = pq.ProductId!.Value;
+            var quantity = pq.Quantity!.Value;
+
+            var product = await _productRepository.GetByIdAsync(productId);
+            if (product == null) throw new Exception($"Can't find product by id {productId}");
+
+            productQuantities.Add(new ProductQuantityEntity()
+            {
+                Product = product,
+                Quantity = quantity,
+            });
+        }
 
         try
         {

@@ -1,14 +1,13 @@
-﻿namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts
+﻿namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts;
+
+public sealed class GetAllProductsErrorResponse
 {
-    public sealed class GetAllProductsErrorResponse
+    public GetAllProductsErrorResponse(string message)
     {
-        public GetAllProductsErrorResponse(string message)
-        {
-            if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
+        if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
 
-            Message = message;
-        }
-
-        public string Message { get; }
+        Message = message;
     }
+
+    public string Message { get; }
 }

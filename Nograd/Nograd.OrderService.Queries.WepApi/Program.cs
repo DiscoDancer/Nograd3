@@ -1,4 +1,4 @@
-using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts;
+using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +7,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.UseGetAllProductsFeature();
+builder.UseGetAllOrdersFeature();
+
 
 var app = builder.Build();
+
 
 app.UseSwagger();
 app.UseSwaggerUI();

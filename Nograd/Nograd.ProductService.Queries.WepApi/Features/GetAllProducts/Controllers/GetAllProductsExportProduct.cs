@@ -1,4 +1,4 @@
-﻿namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts
+﻿namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers
 {
     public sealed class GetAllProductsExportProduct
     {

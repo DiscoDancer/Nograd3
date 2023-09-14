@@ -2,7 +2,7 @@
 using Nograd.ProductService.Queries.Persistence.Entities;
 using Nograd.ProductService.Queries.Persistence.Repositories;
 
-namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts;
+namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Queries;
 
 public sealed class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, IEnumerable<ProductEntity>>
 {

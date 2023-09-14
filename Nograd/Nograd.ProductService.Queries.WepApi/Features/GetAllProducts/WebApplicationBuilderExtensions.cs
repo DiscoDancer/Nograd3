@@ -1,4 +1,5 @@
 ﻿using Nograd.ProductService.Queries.Persistence;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts;
 

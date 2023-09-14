@@ -1,8 +1,9 @@
 ﻿using Nograd.ProductService.Queries.Persistence.Entities;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
 
-namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts
+namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers
 {
-    public sealed class GetAllProductsMapper: IGetAllProductsMapper
+    public sealed class GetAllProductsMapper : IGetAllProductsMapper
     {
         public GetAllProductsExportProduct Map(ProductEntity product)
         {

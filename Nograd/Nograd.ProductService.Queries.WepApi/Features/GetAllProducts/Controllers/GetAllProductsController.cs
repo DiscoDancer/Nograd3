@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers;
 
-namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts;
+namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]

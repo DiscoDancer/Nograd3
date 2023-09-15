@@ -21,7 +21,6 @@ public sealed class WriteOrderRepository : IWriteOrderRepository
         var foundOrder = await GetByIdAsync(order.OrderId, context);
         if (foundOrder == null) throw new Exception("order not found");
         context.Orders.Remove(foundOrder);
-
         context.Orders.Add(order);
 
         _ = await context.SaveChangesAsync();

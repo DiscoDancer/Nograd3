@@ -1,45 +1,55 @@
-﻿using Nograd.ProductService.Queries.Persistence.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Nograd.ProductService.Queries.Persistence.Context;
 using Nograd.ProductService.Queries.Persistence.Entities;
 
 namespace Nograd.ProductService.Queries.Persistence.Repositories;
 
 public sealed class WriteProductRepository : IWriteProductRepository
 {
-    private readonly DatabaseContextFactory _contextFactory;
-    private readonly IReadProductRepository _readProductRepository;
+    private readonly IDbContextFactory<DatabaseContext> _contextFactory;
 
-    public WriteProductRepository(DatabaseContextFactory contextFactory, IReadProductRepository readProductRepository)
+    public WriteProductRepository(IDbContextFactory<DatabaseContext> contextFactory)
     {
         _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
-        _readProductRepository = readProductRepository ?? throw new ArgumentNullException(nameof(readProductRepository));
     }
 
     public async Task CreateAsync(ProductEntity product)
     {
-        await using var context = _contextFactory.CreateDbContext();
+        await using var context = await _contextFactory.CreateDbContextAsync();
         context.Products.Add(product);
-
         _ = await context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(ProductEntity product)
     {
-        var foundProduct = await _readProductRepository.GetByIdAsync(product.ProductId);
-        if (foundProduct == null) throw new Exception("product not found");
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var dbContextTransaction = await context.Database.BeginTransactionAsync();
 
-        await using var context = _contextFactory.CreateDbContext();
-        context.Products.Update(product);
+        var foundProduct = await GetByIdAsync(product.ProductId, context);
+        if (foundProduct == null) throw new Exception("product not found");
+        context.Products.Remove(foundProduct);
+        context.Products.Add(product);
 
         _ = await context.SaveChangesAsync();
+        await dbContextTransaction.CommitAsync();
     }
 
     public async Task RemoveAsync(Guid productId)
     {
-        var foundProduct = await _readProductRepository.GetByIdAsync(productId);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        var foundProduct = await GetByIdAsync(productId, context);
         if (foundProduct == null) throw new Exception("product not found");
 
-        await using var context = _contextFactory.CreateDbContext();
         context.Products.Remove(foundProduct);
         _ = await context.SaveChangesAsync();
+    }
+
+    private static async Task<ProductEntity?> GetByIdAsync(Guid productId, DatabaseContext existingContext)
+    {
+        return await existingContext
+            .Products
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ProductId == productId);
     }
 }

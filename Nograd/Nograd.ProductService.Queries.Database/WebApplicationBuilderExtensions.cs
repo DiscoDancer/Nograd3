@@ -11,30 +11,25 @@ public static class WebApplicationBuilderExtensions
 {
     public static void UseReadProductRepository(this WebApplicationBuilder builder)
     {
-        Action<DbContextOptionsBuilder> configureDbContext = o =>
-            o.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
-        builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
+        builder.UseDatabase();
 
-        // Create database and tables from code
-        var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<DatabaseContext>();
-        dataContext.Database.EnsureCreated();
-
-        builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
         builder.Services.AddScoped<IReadProductRepository, ReadProductRepository>();
     }
 
     public static void UseWriteProductRepository(this WebApplicationBuilder builder)
     {
-        Action<DbContextOptionsBuilder> configureDbContext = o =>
-            o.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
-        builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
+        builder.UseDatabase();
 
-        // Create database and tables from code
-        var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<DatabaseContext>();
-        dataContext.Database.EnsureCreated();
-
-        builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
-        builder.Services.AddScoped<IReadProductRepository, ReadProductRepository>();
         builder.Services.AddScoped<IWriteProductRepository, WriteProductRepository>();
+    }
+
+    private static void UseDatabase(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContextFactory<DatabaseContext>(o =>
+            o.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+
+        var factory = builder.Services.BuildServiceProvider().GetRequiredService<IDbContextFactory<DatabaseContext>>();
+        var context = factory.CreateDbContext();
+        context.Database.EnsureCreated();
     }
 }

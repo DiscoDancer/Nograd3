@@ -22,24 +22,32 @@ public sealed class WriteProductRepository : IWriteProductRepository
 
     public async Task UpdateAsync(ProductEntity product)
     {
-        await RemoveAsync(product.ProductId);
-        await CreateAsync(product);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var dbContextTransaction = await context.Database.BeginTransactionAsync();
+
+        var foundProduct = await GetByIdAsync(product.ProductId, context);
+        if (foundProduct == null) throw new Exception("product not found");
+        context.Products.Remove(foundProduct);
+        context.Products.Add(product);
+
+        _ = await context.SaveChangesAsync();
+        await dbContextTransaction.CommitAsync();
     }
 
     public async Task RemoveAsync(Guid productId)
     {
-        var foundOrder = await GetByIdAsync(productId);
-        if (foundOrder == null) throw new Exception("product not found");
-
         await using var context = await _contextFactory.CreateDbContextAsync();
-        context.Products.Remove(foundOrder);
+
+        var foundProduct = await GetByIdAsync(productId, context);
+        if (foundProduct == null) throw new Exception("product not found");
+
+        context.Products.Remove(foundProduct);
         _ = await context.SaveChangesAsync();
     }
 
-    private async Task<ProductEntity?> GetByIdAsync(Guid productId)
+    private static async Task<ProductEntity?> GetByIdAsync(Guid productId, DatabaseContext existingContext)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
-        return await context
+        return await existingContext
             .Products
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ProductId == productId);

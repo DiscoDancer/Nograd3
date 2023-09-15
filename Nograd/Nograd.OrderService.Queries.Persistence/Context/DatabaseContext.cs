@@ -7,10 +7,10 @@ namespace Nograd.OrderService.Queries.Persistence.Context;
 
 public sealed class DatabaseContext : DbContext
 {
+    public DatabaseContext(DbContextOptions options) : base(options)
+    {
+    }
+
     public DbSet<OrderEntity> Orders { get; set; }
     public DbSet<ProductEntity> Products { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlServer("Server=localhost,3333;Database=Nograd3.Orders;User Id=sa;Password=$tr0ngS@P@ssw0rd02;TrustServerCertificate=true;");
-
 }

@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Nograd.OrderService.KafkaMessages;
 
-namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer.Order;
+namespace Nograd.OrderService.KafkaMessages;
 
 public sealed class OrderMessageJsonConverter : JsonConverter<OrderBaseMessage>
 {

@@ -1,10 +1,9 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Nograd.ProductServices.KafkaMessages;
 
-namespace Nograd.ProductService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
+namespace Nograd.ProductServices.KafkaMessages;
 
-public sealed class MessageJsonConverter : JsonConverter<ProductBaseMessage>
+public sealed class ProductMessageJsonConverter : JsonConverter<ProductBaseMessage>
 {
     public override bool CanConvert(Type typeToConvert)
     {

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Queries;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
 

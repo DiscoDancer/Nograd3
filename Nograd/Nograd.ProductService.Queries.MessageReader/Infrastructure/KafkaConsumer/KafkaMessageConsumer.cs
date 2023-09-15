@@ -37,7 +37,7 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
             var consumeResult = consumer.Consume();
             if (consumeResult?.Message == null) continue;
 
-            var options = new JsonSerializerOptions { Converters = { new MessageJsonConverter() } };
+            var options = new JsonSerializerOptions { Converters = { new ProductMessageJsonConverter() } };
             var message = JsonSerializer.Deserialize<ProductBaseMessage>(consumeResult.Message.Value, options);
             if (message == null)
             {

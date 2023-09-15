@@ -53,7 +53,7 @@ public sealed class OrderMessageHandler : IOrderMessageHandler
 
                 productQuantities.Add(new ProductQuantityEntity()
                 {
-                    Product = product,
+                    ProductId = productId,
                     Quantity = quantity,
                 });
             }

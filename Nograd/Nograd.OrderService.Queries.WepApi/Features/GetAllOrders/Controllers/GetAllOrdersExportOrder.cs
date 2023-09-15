@@ -22,6 +22,11 @@ public sealed class GetAllOrdersExportOrder
         IsGift = isGift;
         IsShipped = isShipped;
         ProductQuantities = productQuantities;
+
+        foreach (var pq in ProductQuantities)
+        {
+            Total += pq.Product.Price * pq.Quantity;
+        }
     }
 
 
@@ -31,4 +36,5 @@ public sealed class GetAllOrdersExportOrder
     public string CustomerName { get; }
     public string CustomerAddress { get; }
     public Guid OrderId { get; }
+    public decimal Total { get; }
 }

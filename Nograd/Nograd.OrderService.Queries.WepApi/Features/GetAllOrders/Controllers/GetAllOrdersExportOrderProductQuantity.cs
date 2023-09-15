@@ -2,16 +2,16 @@
 
 public sealed class GetAllOrdersExportOrderProductQuantity
 {
-    public GetAllOrdersExportOrderProductQuantity(Guid productId, int quantity)
+    public GetAllOrdersExportOrderProductQuantity(GetAllOrdersExportProduct product, int quantity)
     {
-        if (productId == Guid.Empty) throw new ArgumentException(nameof(productId));
+        if (product == null) throw new ArgumentException(nameof(product));
         if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity));
 
-        ProductId = productId;
+        Product = product;
         Quantity = quantity;
     }
 
 
-    public Guid ProductId { get; }
+    public GetAllOrdersExportProduct Product { get; }
     public int Quantity { get; }
 }

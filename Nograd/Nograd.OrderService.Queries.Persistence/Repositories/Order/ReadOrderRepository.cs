@@ -19,6 +19,7 @@ public sealed class ReadOrderRepository : IReadOrderRepository
         return await context
             .Orders
             .Include(x => x.ProductQuantities)
+            .ThenInclude(x => x.Product)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.OrderId == orderId);
     }
@@ -29,6 +30,7 @@ public sealed class ReadOrderRepository : IReadOrderRepository
         return await context
             .Orders
             .Include(x => x.ProductQuantities)
+            .ThenInclude(x => x.Product)
             .AsNoTracking()
             .ToListAsync();
     }

@@ -13,33 +13,46 @@ public sealed class WriteOrderRepository : IWriteOrderRepository
         _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
     }
 
-    public async Task CreateAsync(OrderEntity order)
-    {
-        await using var context = await _contextFactory.CreateDbContextAsync();
-        context.Orders.Add(order);
-        _ = await context.SaveChangesAsync();
-    }
-
     public async Task UpdateAsync(OrderEntity order)
     {
-        await RemoveAsync(order.OrderId);
-        await CreateAsync(order);
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        await using var dbContextTransaction = await context.Database.BeginTransactionAsync();
+        await RemoveAsync(order.OrderId, context);
+        await CreateAsync(order, context);
+        await dbContextTransaction.CommitAsync();
     }
 
     public async Task RemoveAsync(Guid orderId)
     {
-        var foundOrder = await GetByIdAsync(orderId);
-        if (foundOrder == null) throw new Exception("order not found");
-
         await using var context = await _contextFactory.CreateDbContextAsync();
-        context.Orders.Remove(foundOrder);
-        _ = await context.SaveChangesAsync();
+        await RemoveAsync(orderId, context);
     }
 
-    private async Task<OrderEntity?> GetByIdAsync(Guid orderId)
+    public async Task CreateAsync(OrderEntity order)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
-        return await context
+        await CreateAsync(order, context);
+    }
+
+    private async Task CreateAsync(OrderEntity order, DatabaseContext existingContext)
+    {
+        existingContext.Orders.Add(order);
+        _ = await existingContext.SaveChangesAsync();
+    }
+
+    private async Task RemoveAsync(Guid orderId, DatabaseContext existingContext)
+    {
+        var foundOrder = await GetByIdAsync(orderId, existingContext);
+        if (foundOrder == null) throw new Exception("order not found");
+
+        existingContext.Orders.Remove(foundOrder);
+        _ = await existingContext.SaveChangesAsync();
+    }
+
+    private async Task<OrderEntity?> GetByIdAsync(Guid orderId, DatabaseContext existingContext)
+    {
+        return await existingContext
             .Orders
             .Include(x => x.ProductQuantities)
             .AsNoTracking()

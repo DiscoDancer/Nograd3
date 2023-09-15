@@ -51,7 +51,7 @@ public sealed class OrderMessageHandler : IOrderMessageHandler
                 var product = await _productRepository.GetByIdAsync(productId);
                 if (product == null) throw new Exception($"Can't find product by id {productId}");
 
-                productQuantities.Add(new ProductQuantityEntity()
+                productQuantities.Add(new ProductQuantityEntity
                 {
                     ProductId = productId,
                     Quantity = quantity,
@@ -100,9 +100,9 @@ public sealed class OrderMessageHandler : IOrderMessageHandler
             var product = await _productRepository.GetByIdAsync(productId);
             if (product == null) throw new Exception($"Can't find product by id {productId}");
 
-            productQuantities.Add(new ProductQuantityEntity()
+            productQuantities.Add(new ProductQuantityEntity
             {
-                Product = product,
+                ProductId = productId,
                 Quantity = quantity,
             });
         }

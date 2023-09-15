@@ -3,6 +3,8 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Options;
 using Nograd.OrderService.KafkaMessages;
 using Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer.Order;
+using Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer.Product;
+using Nograd.ProductServices.KafkaMessages;
 
 namespace Nograd.OrderService.Queries.MessageConsumer.Infrastructure.KafkaConsumer;
 
@@ -11,11 +13,13 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
     private readonly ConsumerConfig _consumerConfig;
     private readonly string _orderTopicName;
     private readonly string _productTopicName;
-    private readonly IOrderMessageHandler _messageHandler;
+    private readonly IOrderMessageHandler _orderMessageHandler;
+    private readonly IProductMessageHandler _productMessageHandler;
 
     public KafkaMessageConsumer(
         IOptions<KafkaConfig> config,
-        IOrderMessageHandler messageHandler)
+        IOrderMessageHandler messageHandler,
+        IProductMessageHandler productMessageHandler)
     {
         if (config == null) throw new ArgumentNullException(nameof(config));
         if (string.IsNullOrWhiteSpace(config.Value.OrderTopic)) throw new ArgumentNullException(nameof(config.Value.OrderTopic));
@@ -25,7 +29,8 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
                           throw new ArgumentNullException(nameof(config.Value.ConsumerConfig));
         _orderTopicName = config.Value.OrderTopic;
         _productTopicName = config.Value.ProductTopic;
-        _messageHandler = messageHandler ?? throw new ArgumentNullException(nameof(messageHandler));
+        _orderMessageHandler = messageHandler ?? throw new ArgumentNullException(nameof(messageHandler));
+        _productMessageHandler = productMessageHandler ?? throw new ArgumentNullException(nameof(productMessageHandler));
     }
 
     public void Consume()
@@ -47,13 +52,18 @@ public sealed class KafkaMessageConsumer : IKafkaMessageConsumer
                 var options = new JsonSerializerOptions { Converters = { new OrderMessageJsonConverter() } };
                 var message = JsonSerializer.Deserialize<OrderBaseMessage>(consumeResult.Message.Value, options);
                 if (message == null) throw new Exception("Failed to serialized a message");
-                _messageHandler.HandleAsync(message);
+                _orderMessageHandler.HandleAsync(message);
 
                 consumer.Commit(consumeResult);
             }
             else if (consumeResult.Topic == _productTopicName)
             {
-                throw new NotImplementedException("Not supported case");
+                var options = new JsonSerializerOptions { Converters = { new ProductMessageJsonConverter() } };
+                var message = JsonSerializer.Deserialize<ProductBaseMessage>(consumeResult.Message.Value, options);
+                if (message == null) throw new Exception("Failed to serialized a message");
+                _productMessageHandler.HandleAsync(message);
+
+                consumer.Commit(consumeResult);
             }
             else
             {

@@ -2,11 +2,11 @@
 
 namespace Nograd.OrderService.Commands.Features.RemoveOrder;
 
-public static class ServiceExtensions
+public static class WebApplicationBuilderExtensions
 {
-    public static void UseRemoveOrderFeature(this IServiceCollection serviceCollection)
+    public static void UseRemoveOrderFeature(this WebApplicationBuilder builder)
     {
-        serviceCollection
+        builder.Services
             .AddTransient<IRemoveOrderControllerInputToCommandMapper, RemoveOrderControllerInputToCommandMapper>();
     }
 }

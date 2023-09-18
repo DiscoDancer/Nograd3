@@ -2,11 +2,11 @@
 
 namespace Nograd.ProductService.Commands.Features.UpdateProduct;
 
-public static class ServiceExtensions
+public static class WebApplicationBuilderExtensions
 {
-    public static void UseUpdateProductFeature(this IServiceCollection serviceCollection)
+    public static void UseUpdateProductFeature(this WebApplicationBuilder builder)
     {
-        serviceCollection
+        builder.Services
             .AddTransient<IUpdateProductControllerInputToCommandMapper, UpdateProductControllerInputToCommandMapper>();
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Nograd.OrderService.Commands.Features.UpdateOrder;
 
-public static class ServiceExtensions
+public static class WebApplicationBuilderExtensions
 {
-    public static void UseUpdateOrderFeature(this IServiceCollection serviceCollection)
+    public static void UseUpdateOrderFeature(this WebApplicationBuilder builder)
     {
-        serviceCollection
+        builder.Services
             .AddTransient<IUpdateOrderControllerInputToCommandMapper, UpdateOrderControllerInputToCommandMapper>();
     }
 }

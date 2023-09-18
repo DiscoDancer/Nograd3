@@ -2,11 +2,11 @@
 
 namespace Nograd.ProductService.Commands.Features.RemoveProduct;
 
-public static class ServiceExtensions
+public static class WebApplicationBuilderExtensions
 {
-    public static void UseRemoveProductFeature(this IServiceCollection serviceCollection)
+    public static void UseRemoveProductFeature(this WebApplicationBuilder builder)
     {
-        serviceCollection
+        builder.Services
             .AddTransient<IRemoveProductControllerInputToCommandMapper, RemoveProductControllerInputToCommandMapper>();
     }
 }

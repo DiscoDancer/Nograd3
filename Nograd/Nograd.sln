@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.OrderService.Queries
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.ProductService.Queries.Client", "Nograd.ProductService.Client\Nograd.ProductService.Queries.Client.csproj", "{FA8C317E-C5EF-4C41-86D9-403F198FF24E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.ProductService.ConsoleApp", "Nograd.ProductService.ConsoleApp\Nograd.ProductService.ConsoleApp.csproj", "{0BEF53F5-016C-4087-BCD8-953FF1994910}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{FA8C317E-C5EF-4C41-86D9-403F198FF24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA8C317E-C5EF-4C41-86D9-403F198FF24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8C317E-C5EF-4C41-86D9-403F198FF24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BEF53F5-016C-4087-BCD8-953FF1994910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BEF53F5-016C-4087-BCD8-953FF1994910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BEF53F5-016C-4087-BCD8-953FF1994910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BEF53F5-016C-4087-BCD8-953FF1994910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{93F1CB85-621E-43B6-90C3-8E0C853FEBA5} = {162CD1B1-C8BB-4C41-B272-DFDB4D06D0F0}
 		{720267A3-9CE6-41B3-B757-20E54FF59A18} = {162CD1B1-C8BB-4C41-B272-DFDB4D06D0F0}
 		{FA8C317E-C5EF-4C41-86D9-403F198FF24E} = {D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}
+		{0BEF53F5-016C-4087-BCD8-953FF1994910} = {D5AC67CD-44E1-4B1B-BA8A-B32DB9DD5E2C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B414F3A4-26BD-404B-8F95-680146698F54}

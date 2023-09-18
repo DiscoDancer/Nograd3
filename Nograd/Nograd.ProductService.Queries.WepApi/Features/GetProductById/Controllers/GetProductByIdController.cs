@@ -6,7 +6,7 @@ using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Queries;
 namespace Nograd.ProductService.Queries.WepApi.Features.GetProductById.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(GetProductByIdRoutes.ControllerRoute)]
 public sealed class GetProductByIdController : ControllerBase
 {
     private readonly ILogger<GetProductByIdController> _logger;
@@ -24,6 +24,7 @@ public sealed class GetProductByIdController : ControllerBase
     }
 
     [HttpGet]
+    [Route(GetProductByIdRoutes.ActionRoute)]
     public async Task<ActionResult> GetProductByIdAsync(Guid productId)
     {
         if (productId == Guid.Empty) throw new ArgumentNullException(nameof(productId));

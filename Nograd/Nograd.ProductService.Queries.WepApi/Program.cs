@@ -1,4 +1,4 @@
-using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts;
+using Nograd.ProductService.Queries.WepApi.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.UseGetAllProductsFeature();
+builder.UseFeatures();
 
 var app = builder.Build();
 

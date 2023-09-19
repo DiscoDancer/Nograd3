@@ -16,6 +16,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Nograd.OrderService.KafkaMessages\Nograd.OrderService.KafkaMessages.csproj" />
+	  <ProjectReference Include="..\Nograd.ProductService.Client\Nograd.ProductService.Queries.Client.csproj" />
 	</ItemGroup>
 
 </Project>

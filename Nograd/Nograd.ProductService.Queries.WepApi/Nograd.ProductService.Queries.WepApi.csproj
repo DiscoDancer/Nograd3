@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Nograd.Libraries.AspNetCoreExtensions\Nograd.Libraries.AspNetCoreExtensions.csproj" />
 	  <ProjectReference Include="..\Nograd.ProductService.Queries.Database\Nograd.ProductService.Queries.Persistence.csproj" />
 	</ItemGroup>
 

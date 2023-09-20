@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nograd.Libraries.AspNetCoreExtensions\Nograd.Libraries.AspNetCoreExtensions.csproj" />
     <ProjectReference Include="..\Nograd.ProductServices.KafkaMessages\Nograd.ProductServices.KafkaMessages.csproj" />
   </ItemGroup>
 

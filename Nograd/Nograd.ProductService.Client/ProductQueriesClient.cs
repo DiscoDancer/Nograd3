@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Controllers;
+﻿using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Controllers;
 using RestSharp;
 
 namespace Nograd.ProductService.Queries.Client;
@@ -22,10 +21,11 @@ public sealed class ProductQueriesClient : IProductQueriesClient
         var request = new RestRequest($"/{GetProductByIdRoutes.ControllerRoute}/{GetProductByIdRoutes.ActionRoute}");
         request.AddParameter(nameof(productId), productId);
 
-        var response = await _restClient.ExecuteAsync<GetProductByIdExportProduct>(request);
-        if (response.StatusCode == HttpStatusCode.NotFound)
+        var response = await _restClient.ExecuteAsync<GetProductByIdExportProduct?>(request);
+
+        if (!response.IsSuccessStatusCode)
         {
-            return null;
+            throw new Exception("Failed to GetProductById");
         }
 
         return response.Data;

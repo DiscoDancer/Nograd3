@@ -34,7 +34,7 @@ public sealed class GetProductByIdController : ControllerBase
             var product = await _mediator.Send(new GetProductByIdQuery(productId));
             if (product == null)
             {
-                return NotFound();
+                return Ok(null);
             }
 
             var exportProduct = _mapper.Map(product);

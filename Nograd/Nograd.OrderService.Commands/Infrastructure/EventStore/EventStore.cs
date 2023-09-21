@@ -27,7 +27,7 @@ public sealed class EventStore : IEventStore
         var eventModel = new EventModel
         {
             TimeStamp = DateTime.Now,
-            ProductId = orderId,
+            OrderId = orderId,
             EventType = @event.GetType().Name,
             EventData = @event
         };
@@ -38,7 +38,7 @@ public sealed class EventStore : IEventStore
     public async Task<List<BaseEvent>> GetEventsAsync(Guid orderId)
     {
         var rawRows = await _eventStoreCollection
-            .Find(x => x.ProductId == orderId)
+            .Find(x => x.OrderId == orderId)
             .ToListAsync();
 
         var result = rawRows.Where(x => x.EventData != null).Select(x => x.EventData!).ToList();

@@ -10,7 +10,7 @@ namespace Nograd.OrderService.Commands.Infrastructure.EventStore
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public DateTime? TimeStamp { get; set; }
-        public Guid? ProductId { get; set; }
+        public Guid? OrderId { get; set; }
         public string? EventType { get; set; }
         public BaseEvent? EventData { get; set; }
     }

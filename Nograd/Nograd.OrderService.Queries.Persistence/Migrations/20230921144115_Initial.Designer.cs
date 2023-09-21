@@ -11,9 +11,9 @@ using Nograd.OrderService.Queries.Persistence.Context;
 
 namespace Nograd.OrderService.Queries.Persistence.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
-    [Migration("20230912181343_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(MigrationContext))]
+    [Migration("20230921144115_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,32 @@ namespace Nograd.OrderService.Queries.Persistence.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("Nograd.OrderService.Queries.Persistence.Entities.ProductEntity", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("Nograd.OrderService.Queries.Persistence.Entities.ProductQuantityEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -71,6 +97,8 @@ namespace Nograd.OrderService.Queries.Persistence.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ProductQuantities");
                 });
 
@@ -82,7 +110,15 @@ namespace Nograd.OrderService.Queries.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Nograd.OrderService.Queries.Persistence.Entities.ProductEntity", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Nograd.OrderService.Queries.Persistence.Entities.OrderEntity", b =>

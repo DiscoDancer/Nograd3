@@ -5,7 +5,7 @@ namespace Nograd.OrderService.Queries.Persistence.Entities;
 
 #pragma warning disable CS8618
 
-[Table("Product")]
+[Table("Products")]
 public class ProductEntity
 {
     [Key] public Guid ProductId { get; set; }

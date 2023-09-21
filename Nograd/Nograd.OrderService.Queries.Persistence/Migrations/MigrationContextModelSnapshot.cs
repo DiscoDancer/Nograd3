@@ -10,8 +10,8 @@ using Nograd.OrderService.Queries.Persistence.Context;
 
 namespace Nograd.OrderService.Queries.Persistence.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MigrationContext))]
+    partial class MigrationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -70,7 +70,7 @@ namespace Nograd.OrderService.Queries.Persistence.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Nograd.OrderService.Queries.Persistence.Entities.ProductQuantityEntity", b =>

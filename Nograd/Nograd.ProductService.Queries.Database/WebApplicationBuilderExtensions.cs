@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
     private static void UseDatabase(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContextFactory<DatabaseContext>(o =>
-            o.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+            o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
         var factory = builder.Services.BuildServiceProvider().GetRequiredService<IDbContextFactory<DatabaseContext>>();
         var context = factory.CreateDbContext();

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nograd.ProductService.Queries.Persistence.Entities;
 
-[Table("Product")]
+[Table("Products")]
 public class ProductEntity
 {
     [Key] public Guid ProductId { get; set; }

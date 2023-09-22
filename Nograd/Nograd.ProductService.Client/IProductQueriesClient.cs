@@ -5,4 +5,5 @@ namespace Nograd.ProductService.Queries.Client;
 public interface IProductQueriesClient
 {
     Task<GetProductByIdExportProduct?> GetProductByIdOrDefaultAsync(Guid id);
+    Task<bool> EnsureProductsExistAsync(IReadOnlyCollection<Guid> productIds);
 }

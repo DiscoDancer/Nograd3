@@ -35,14 +35,13 @@ public sealed class CreateOrderController : ControllerBase
         {
             var command = _mapper.Map(input, orderId);
 
-            foreach (var productQuantity in command.ProductQuantities)
+            var productsIds = command.ProductQuantities.Select(x => x.ProductId).ToArray();
+            var allProductsExist = await _productQueriesClient.EnsureProductsExistAsync(productsIds);
+            if (!allProductsExist)
             {
-                var productId = productQuantity.ProductId;
-                var foundProduct = await _productQueriesClient.GetProductByIdOrDefaultAsync(productId);
-                if (foundProduct == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError,
-                        new CreateOrderControllerOutput(orderId,
-                            $"Can't create order because product with id {productId} not found or not exists"));
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new CreateOrderControllerOutput(orderId,
+                        $"Can't create order because some products are not not found or not exists"));
             }
 
             await _mediator.Send(command);

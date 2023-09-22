@@ -4,7 +4,7 @@ using Nograd.ProductService.Queries.Persistence.Repositories;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetProductById.Queries;
 
-public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductEntity?>
+public sealed class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductEntity?>
 {
     private readonly IReadProductRepository _productRepository;
 

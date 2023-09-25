@@ -1,3 +1,5 @@
+using Nograd.ProductService.Queries.Client;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -6,6 +8,8 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddServerSideBlazor();
+
+builder.UseProductQueriesClient();
 
 var app = builder.Build();
 

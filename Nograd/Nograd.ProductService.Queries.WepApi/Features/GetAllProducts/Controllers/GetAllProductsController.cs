@@ -6,7 +6,7 @@ using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Queries;
 namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(GetAllProductsRoutes.ControllerRoute)]
 public sealed class GetAllProductsController : ControllerBase
 {
     private readonly ILogger<GetAllProductsController> _logger;
@@ -22,6 +22,7 @@ public sealed class GetAllProductsController : ControllerBase
     }
 
     [HttpGet]
+    [Route(GetAllProductsRoutes.ActionRoute)]
     public async Task<ActionResult> GetAllProductsAsync(int take = 100, int skip = 0, string? category = null)
     {
         try

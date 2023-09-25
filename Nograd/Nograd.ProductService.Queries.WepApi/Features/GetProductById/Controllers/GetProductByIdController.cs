@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers;
 using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Mappers;
 using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Queries;
 
@@ -33,10 +32,7 @@ public sealed class GetProductByIdController : ControllerBase
         try
         {
             var product = await _mediator.Send(new GetProductByIdQuery(productId));
-            if (product == null)
-            {
-                return Ok(null);
-            }
+            if (product == null) return Ok(null);
 
             var exportProduct = _mapper.Map(product);
             return Ok(exportProduct);

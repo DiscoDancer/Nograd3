@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using Nograd.ProductService.Queries.Persistence.Entities;
 using Nograd.ProductService.Queries.Persistence.Repositories;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Queries;
 
-public sealed class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, IEnumerable<ProductEntity>>
+public sealed class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, GetAllProductsQueryOutput>
 {
     private readonly IReadProductRepository _productRepository;
 
@@ -13,9 +12,12 @@ public sealed class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery,
         _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
-    public async Task<IEnumerable<ProductEntity>> Handle(GetAllProductsQuery request,
+    public async Task<GetAllProductsQueryOutput> Handle(GetAllProductsQuery request,
         CancellationToken cancellationToken)
     {
-        return await _productRepository.ListAllAsync();
+        var totalCountWithSelectedCategory = await _productRepository.Count(request.Category);
+        var products = await _productRepository.ListAllAsync(take: request.Take, skip: request.Skip, category: request.Category);
+
+        return new GetAllProductsQueryOutput(products, totalCountWithSelectedCategory);
     }
 }

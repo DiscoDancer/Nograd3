@@ -22,30 +22,23 @@ public sealed class GetAllProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllProductsAsync()
+    public async Task<ActionResult> GetAllProductsAsync(int take = 100, int skip = 0, string? category = null)
     {
         try
         {
-            var products = await _mediator.Send(new GetAllProductsQuery());
-            var exportProducts = products.Select(_mapper.Map).ToList();
+            var commandResult = await _mediator.Send(new GetAllProductsQuery(take, skip, category));
+            var outputResult = _mapper.Map(commandResult);
 
-            return NormalResponse(exportProducts);
+            if (!outputResult.Products.Any())
+                return NoContent();
+
+            return Ok(outputResult);
         }
         catch (Exception e)
         {
             const string safeErrorMessage = "Error while processing request to retrieve all products!";
             return ErrorResponse(e, safeErrorMessage);
         }
-    }
-
-    private ActionResult NormalResponse(List<GetAllProductsExportProduct> products)
-    {
-        if (!products.Any())
-            return NoContent();
-
-        var count = products.Count;
-        return Ok(new GetAllProductsSuccessResponse(products,
-            $"Successfully returned {count} product{(count > 1 ? "s" : string.Empty)}!"));
     }
 
     private ActionResult ErrorResponse(Exception ex, string safeErrorMessage)

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers;
+using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Mappers;
 using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Queries;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetProductById.Controllers;
@@ -11,12 +12,12 @@ public sealed class GetProductByIdController : ControllerBase
 {
     private readonly ILogger<GetProductByIdController> _logger;
     private readonly IMediator _mediator;
-    private readonly IGetAllProductsMapper _mapper;
+    private readonly IGetProductByIdMapper _mapper;
 
     public GetProductByIdController(
         ILogger<GetProductByIdController> logger,
         IMediator mediator,
-        IGetAllProductsMapper mapper)
+        IGetProductByIdMapper mapper)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

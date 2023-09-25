@@ -1,11 +1,24 @@
 ﻿using Nograd.ProductService.Queries.Persistence.Entities;
 using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Queries;
 
 namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers
 {
     public sealed class GetAllProductsMapper : IGetAllProductsMapper
     {
-        public GetAllProductsExportProduct Map(ProductEntity product)
+        public GetAllProductsOutput Map(GetAllProductsQueryOutput queryOutput)
+        {
+            if (queryOutput == null) throw new ArgumentNullException(nameof(queryOutput));
+            if (queryOutput.Products == null) throw new ArgumentNullException(nameof(queryOutput.Products));
+            if (queryOutput.TotalCountWithSelectedCategory < 0)
+                throw new ArgumentOutOfRangeException(nameof(queryOutput.TotalCountWithSelectedCategory));
+
+            return new GetAllProductsOutput(
+                totalWithSelectedCategory: queryOutput.TotalCountWithSelectedCategory,
+                products: queryOutput.Products.Select(MapSingleProduct).ToArray());
+        }
+
+        private GetAllProductsExportProduct MapSingleProduct(ProductEntity product)
         {
             if (product == null) throw new ArgumentNullException(nameof(product));
             if (string.IsNullOrWhiteSpace(product.Name)) throw new ArgumentNullException(nameof(product.Name));
@@ -21,5 +34,6 @@ namespace Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Mappers
                 productId: product.ProductId,
                 price: product.Price);
         }
+
     }
 }

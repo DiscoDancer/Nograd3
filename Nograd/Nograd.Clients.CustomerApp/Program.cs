@@ -1,3 +1,4 @@
+using Nograd.Clients.CustomerApp.Models.Product.Index;
 using Nograd.ProductService.Queries.Client;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,12 +10,15 @@ builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.AddTransient<IProductIndexMapper, ProductIndexMapper>();
+
 builder.UseProductQueriesClient();
 
 var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
+
 
 app.UseSession();
 app.UseHttpsRedirection();

@@ -7,11 +7,14 @@
     <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
-<h1>Hello world!</h1>
-<div class="row m-1 p-1">
-    <div class="col-9">
-        @RenderBody()
+<h1>Hello world from layout!</h1>
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-3">
+            @await Component.InvokeAsync("NavigationMenu")
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
     </div>
-</div>
 </body>
 </html>

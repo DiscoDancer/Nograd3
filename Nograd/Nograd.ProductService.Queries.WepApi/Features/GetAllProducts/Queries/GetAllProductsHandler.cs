@@ -15,7 +15,7 @@ public sealed class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery,
     public async Task<GetAllProductsQueryOutput> Handle(GetAllProductsQuery request,
         CancellationToken cancellationToken)
     {
-        var totalCountWithSelectedCategory = await _productRepository.Count(request.Category);
+        var totalCountWithSelectedCategory = await _productRepository.CountAsync(request.Category);
         var products = await _productRepository.ListAllAsync(take: request.Take, skip: request.Skip, category: request.Category);
 
         return new GetAllProductsQueryOutput(products, totalCountWithSelectedCategory);

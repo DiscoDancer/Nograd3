@@ -1,4 +1,5 @@
 ﻿using Nograd.ProductService.Queries.WepApi.Features.EnsureProductsExist.Controllers;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllCategories.Controllers;
 using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
 using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Controllers;
 using RestSharp;
@@ -45,6 +46,19 @@ public sealed class ProductQueriesClient : IProductQueriesClient
         if (!response.IsSuccessStatusCode || response.Data == null)
         {
             throw new Exception("Failed to GetAllProducts");
+        }
+
+        return response.Data;
+    }
+
+    public async Task<IReadOnlyCollection<string>> GetAllCategoriesAsync()
+    {
+        var request = new RestRequest($"/{GetAllCategoriesRoutes.ControllerRoute}/{GetAllCategoriesRoutes.ActionRoute}");
+        var response = await _restClient.ExecuteAsync<IReadOnlyCollection<string>>(request);
+
+        if (!response.IsSuccessStatusCode || response.Data == null)
+        {
+            throw new Exception("Failed to GetAllCategoriesAsync");
         }
 
         return response.Data;

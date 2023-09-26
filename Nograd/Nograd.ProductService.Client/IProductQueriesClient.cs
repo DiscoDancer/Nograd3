@@ -11,4 +11,6 @@ public interface IProductQueriesClient
         int? take = null,
         int? skip = null,
         string? category = null);
+
+    Task<IReadOnlyCollection<string>> GetAllCategoriesAsync();
 }

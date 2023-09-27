@@ -7,7 +7,16 @@
     <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
-<h1>Hello world from layout!</h1>
+    <div class="bg-dark text-white p-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col navbar-brand">SPORTS STORE</div>
+                <div class="col-6 navbar-text text-end">
+                    @await Component.InvokeAsync("CartSummary")
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">
             @await Component.InvokeAsync("NavigationMenu")

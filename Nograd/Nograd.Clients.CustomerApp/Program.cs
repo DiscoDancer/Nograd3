@@ -1,3 +1,4 @@
+using Nograd.Clients.CustomerApp.Models.Cart;
 using Nograd.Clients.CustomerApp.Models.Product.Index;
 using Nograd.ProductService.Queries.Client;
 
@@ -11,6 +12,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddTransient<IProductIndexMapper, ProductIndexMapper>();
+builder.Services.AddScoped(SessionCart.GetCart);
 
 builder.UseProductQueriesClient();
 

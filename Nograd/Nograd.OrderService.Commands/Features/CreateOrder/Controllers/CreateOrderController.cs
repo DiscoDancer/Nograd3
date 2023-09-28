@@ -6,7 +6,7 @@ using Nograd.ProductService.Queries.Client;
 namespace Nograd.OrderService.Commands.Features.CreateOrder.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(CreateOrderControllerRoutes.ControllerRoute)]
 public sealed class CreateOrderController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -27,6 +27,7 @@ public sealed class CreateOrderController : ControllerBase
     }
 
     [HttpPost]
+    [Route(CreateOrderControllerRoutes.ActionRoute)]
     public async Task<ActionResult> CreateOrderAsync(CreateOrderControllerInput input)
     {
         var orderId = Guid.NewGuid();

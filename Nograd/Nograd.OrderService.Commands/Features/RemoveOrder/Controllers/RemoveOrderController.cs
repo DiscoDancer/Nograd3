@@ -5,7 +5,7 @@ using Nograd.OrderService.Commands.Features.RemoveOrder.Mappers;
 namespace Nograd.OrderService.Commands.Features.RemoveOrder.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(RemoveOrderControllerRoutes.ControllerRoute)]
 public sealed class RemoveOrderController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -23,6 +23,7 @@ public sealed class RemoveOrderController : ControllerBase
     }
 
     [HttpDelete]
+    [Route(RemoveOrderControllerRoutes.ActionRoute)]
     public async Task<ActionResult> RemoveOrderAsync(RemoveOrderControllerInput input)
     {
         try

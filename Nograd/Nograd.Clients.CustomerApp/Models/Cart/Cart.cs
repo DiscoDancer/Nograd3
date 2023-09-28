@@ -4,7 +4,8 @@ namespace Nograd.Clients.CustomerApp.Models.Cart;
 
 public class Cart
 {
-    public List<CartLine> Lines { get; } = new();
+    // set is important for deserialization
+    public List<CartLine> Lines { get; set; } = new();
 
     public virtual void AddItem(ProductIndexProductViewModel product, int quantity)
     {

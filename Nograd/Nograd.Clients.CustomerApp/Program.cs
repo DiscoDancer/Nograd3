@@ -1,5 +1,7 @@
 using Nograd.Clients.CustomerApp.Models.Cart;
+using Nograd.Clients.CustomerApp.Models.Order;
 using Nograd.Clients.CustomerApp.Models.Product.Index;
+using Nograd.OrderService.Commands.Client;
 using Nograd.ProductService.Queries.Client;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,13 +10,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddTransient<IProductIndexMapper, ProductIndexMapper>();
+builder.Services.AddTransient<IOrderMapper, OrderMapper>();
 builder.Services.AddScoped(SessionCart.GetCart);
 
 builder.UseProductQueriesClient();
+builder.UseOrderCommandsClient();
 
 var app = builder.Build();
 

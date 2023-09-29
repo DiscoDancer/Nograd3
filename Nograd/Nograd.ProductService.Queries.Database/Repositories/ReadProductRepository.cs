@@ -23,13 +23,47 @@ public sealed class ReadProductRepository : IReadProductRepository
             .FirstOrDefaultAsync(x => x.ProductId == productId);
     }
 
-    public async Task<List<ProductEntity>> ListAllAsync()
+    public async Task<List<ProductEntity>> ListAllAsync(int? take = null, int? skip = null, string? category = null)
+    {
+        if ((take == null && skip != null) || (take != null && skip == null))
+            throw new Exception("take and skip must be both null or both provided.");
+
+
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        var baseExpression = context
+            .Products
+            .AsNoTracking();
+
+        if (!string.IsNullOrWhiteSpace(category)) baseExpression = baseExpression.Where(p => p.Category == category);
+        if (take != null && skip != null)
+            baseExpression = baseExpression
+                .Skip(skip.Value)
+                .Take(take.Value);
+
+        return await baseExpression
+            .ToListAsync();
+    }
+
+    public async Task<int> CountAsync(string? category)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
 
+        if (string.IsNullOrWhiteSpace(category))
+            return await context
+                .Products
+                .CountAsync();
+
         return await context
             .Products
-            .AsNoTracking()
-            .ToListAsync();
+            .Where(p => p.Category == category)
+            .CountAsync();
+    }
+
+    public async Task<IReadOnlyCollection<string>> GetAllCategoriesAsync()
+    {
+        await using var context = await _contextFactory.CreateDbContextAsync();
+
+        return await context.Products.Select(x => x.Category).Distinct().ToArrayAsync();
     }
 }

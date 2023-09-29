@@ -1,4 +1,6 @@
 ﻿using Nograd.ProductService.Queries.WepApi.Features.EnsureProductsExist.Controllers;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllCategories.Controllers;
+using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers;
 using Nograd.ProductService.Queries.WepApi.Features.GetProductById.Controllers;
 using RestSharp;
 
@@ -32,6 +34,36 @@ public sealed class ProductQueriesClient : IProductQueriesClient
         return response.Data;
     }
 
+    public async Task<GetAllProductsOutput> GetAllProductsAsync(int? take = null, int? skip = null, string? category = null)
+    {
+        var request = new RestRequest($"/{GetAllProductsRoutes.ControllerRoute}/{GetAllProductsRoutes.ActionRoute}");
+        if (take != null) request.AddParameter(nameof(take), take.Value);
+        if (skip != null) request.AddParameter(nameof(skip), skip.Value);
+        if (!string.IsNullOrWhiteSpace(category)) request.AddParameter(nameof(category), category);
+
+        var response = await _restClient.ExecuteAsync<GetAllProductsOutput?>(request);
+
+        if (!response.IsSuccessStatusCode || response.Data == null)
+        {
+            throw new Exception("Failed to GetAllProducts");
+        }
+
+        return response.Data;
+    }
+
+    public async Task<IReadOnlyCollection<string>> GetAllCategoriesAsync()
+    {
+        var request = new RestRequest($"/{GetAllCategoriesRoutes.ControllerRoute}/{GetAllCategoriesRoutes.ActionRoute}");
+        var response = await _restClient.ExecuteAsync<IReadOnlyCollection<string>>(request);
+
+        if (!response.IsSuccessStatusCode || response.Data == null)
+        {
+            throw new Exception("Failed to GetAllCategoriesAsync");
+        }
+
+        return response.Data;
+    }
+
     public async Task<bool> EnsureProductsExistAsync(IReadOnlyCollection<Guid> productIds)
     {
         if (productIds == null || !productIds.Any()) throw new ArgumentNullException(nameof(productIds));
@@ -49,4 +81,6 @@ public sealed class ProductQueriesClient : IProductQueriesClient
 
         return response.Data;
     }
+
+
 }

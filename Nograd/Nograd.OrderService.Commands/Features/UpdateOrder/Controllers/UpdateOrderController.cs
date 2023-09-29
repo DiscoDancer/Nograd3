@@ -6,7 +6,7 @@ using Nograd.ProductService.Queries.Client;
 namespace Nograd.OrderService.Commands.Features.UpdateOrder.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(UpdateOrderControllerRoutes.ControllerRoute)]
 public sealed class UpdateOrderController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -27,6 +27,7 @@ public sealed class UpdateOrderController : ControllerBase
     }
 
     [HttpPut]
+    [Route(UpdateOrderControllerRoutes.ActionRoute)]
     public async Task<ActionResult> UpdateOrderAsync(UpdateOrderControllerInput input)
     {
         try

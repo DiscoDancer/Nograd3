@@ -11,7 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddServerSideBlazor();
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IProductIndexMapper, ProductIndexMapper>();
 builder.Services.AddTransient<IOrderMapper, OrderMapper>();
 builder.Services.AddScoped(SessionCart.GetCart);

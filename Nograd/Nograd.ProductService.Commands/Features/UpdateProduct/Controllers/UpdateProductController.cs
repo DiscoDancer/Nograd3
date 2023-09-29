@@ -5,7 +5,7 @@ using Nograd.ProductService.Commands.Features.UpdateProduct.Mappers;
 namespace Nograd.ProductService.Commands.Features.UpdateProduct.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(UpdateProductControllerRoutes.ControllerRoute)]
 public sealed class UpdateProductController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -24,6 +24,7 @@ public sealed class UpdateProductController : ControllerBase
     }
 
     [HttpPut]
+    [Route(UpdateProductControllerRoutes.ActionRoute)]
     public async Task<ActionResult> UpdateProductAsync(UpdateProductControllerInput input)
     {
         try

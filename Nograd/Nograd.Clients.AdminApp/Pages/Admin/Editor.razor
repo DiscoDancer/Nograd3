@@ -1,6 +1,8 @@
 ﻿@page "/admin/products/edit/{id:guid}"
 @page "/admin/products/create"
 @using Nograd.Clients.AdminApp.Models
+@using Nograd.ProductService.Commands.Client
+@using Nograd.ProductService.Commands.Features.CreateProduct.Controllers
 @using Nograd.ProductService.Queries.Client
 
 <style>
@@ -47,10 +49,14 @@
 </EditForm>
 
 @inject IProductQueriesClient _productQueriesClient
+@inject IProductCommandsClient _ProductCommandsClient
 @code {
     [Parameter]
     public Guid? Id { get; set; }
     public EditableProduct Product { get; set; } = new();
+
+    [Inject]
+    public NavigationManager? NavManager { get; set; }
 
     public string ThemeColor => Id == null ? "primary" : "warning";
     public string TitleText => Id == null ? "Create" : "Edit";
@@ -78,6 +84,20 @@
 
     public async Task SaveProduct()
     {
-        throw new NotImplementedException();
+        if (Id == null)
+        {
+            await _ProductCommandsClient.CreateProductAsync(new CreateProductControllerInput()
+            {
+                Category = Product.Category,
+                Description = Product.Description,
+                Name = Product.Name,
+                Price = Product.Price,
+            });
+            NavManager?.NavigateTo("/admin/products");
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
     }
 }

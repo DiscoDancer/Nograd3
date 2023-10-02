@@ -43,9 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.Clients.CustomerApp"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.OrderService.Commands.Client", "Nograd.OrderService.Commands.Client\Nograd.OrderService.Commands.Client.csproj", "{23003349-1F14-46A9-9DEE-A2FDDFFF2865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.Clients.AdminApp", "Nograd.Clients.AdminApp\Nograd.Clients.AdminApp.csproj", "{6D674B0C-5E6C-4DA3-B266-89242B1C9C6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.Clients.AdminApp", "Nograd.Clients.AdminApp\Nograd.Clients.AdminApp.csproj", "{6D674B0C-5E6C-4DA3-B266-89242B1C9C6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nograd.ProductService.Commands.Client", "Nograd.ProductService.Commands.Client\Nograd.ProductService.Commands.Client.csproj", "{AC34AF0B-F105-4C80-8A15-EC1CF3850DEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nograd.ProductService.Commands.Client", "Nograd.ProductService.Commands.Client\Nograd.ProductService.Commands.Client.csproj", "{AC34AF0B-F105-4C80-8A15-EC1CF3850DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

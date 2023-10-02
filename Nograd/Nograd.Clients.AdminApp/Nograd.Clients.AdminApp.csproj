@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Nograd.ProductService.Client\Nograd.ProductService.Queries.Client.csproj" />
     <ProjectReference Include="..\Nograd.ProductService.Commands.Client\Nograd.ProductService.Commands.Client.csproj" />
   </ItemGroup>

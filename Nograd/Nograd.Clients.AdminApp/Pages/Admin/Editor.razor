@@ -3,6 +3,7 @@
 @using Nograd.Clients.AdminApp.Models
 @using Nograd.ProductService.Commands.Client
 @using Nograd.ProductService.Commands.Features.CreateProduct.Controllers
+@using Nograd.ProductService.Commands.Features.UpdateProduct.Controllers
 @using Nograd.ProductService.Queries.Client
 
 <style>
@@ -93,11 +94,20 @@
                 Name = Product.Name,
                 Price = Product.Price,
             });
-            NavManager?.NavigateTo("/admin/products");
+
         }
         else
         {
-            throw new NotImplementedException();
+            await _ProductCommandsClient.UpdateProductAsync(new UpdateProductControllerInput()
+            {
+                Category = Product.Category,
+                Description = Product.Description,
+                Name = Product.Name,
+                Price = Product.Price,
+                ProductId = Id
+            });
         }
+
+        NavManager?.NavigateTo("/admin/products");
     }
 }

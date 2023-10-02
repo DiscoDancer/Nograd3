@@ -1,5 +1,6 @@
 ﻿namespace Nograd.ProductService.Commands.Features.RemoveProduct.Controllers;
 
+[Serializable]
 public sealed class RemoveProductControllerOutput
 {
     public RemoveProductControllerOutput(Guid? id, string message)
@@ -10,6 +11,11 @@ public sealed class RemoveProductControllerOutput
         Message = message;
     }
 
-    public Guid? ProductId { get; }
-    public string Message { get; }
+    public RemoveProductControllerOutput()
+    {
+
+    }
+
+    public Guid? ProductId { get; set; }
+    public string? Message { get; set; }
 }

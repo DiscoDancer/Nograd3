@@ -1,0 +1,89 @@
+﻿@page "/admin/products"
+@page "/admin"
+@using Nograd.ProductService.Commands.Client
+@using Nograd.ProductService.Commands.Features.RemoveProduct.Controllers
+@using Nograd.ProductService.Queries.Client
+@using Nograd.ProductService.Queries.WepApi.Features.GetAllProducts.Controllers
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <td />
+        </tr>
+    </thead>
+    <tbody>
+        @if (ProductData.Any())
+        {
+            @foreach (var p in ProductData)
+            {
+                <tr>
+                    <td>@p.ProductId</td>
+                    <td>@p.Name</td>
+                    <td>@p.Category</td>
+                    <td>@p.Price.ToString("c")</td>
+                    <td>
+                        <NavLink class="btn btn-info btn-sm"
+                                 href="@GetDetailsUrl(p)">
+                            Details
+                        </NavLink>
+                        @*                        <NavLink class="btn btn-warning btn-sm"
+                href="@GetEditUrl(p.ProductID ?? 0)">
+                Edit
+                </NavLink>*@
+                        <button class="btn btn-danger btn-sm"
+                        @onclick="@(e => DeleteProduct(p))">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No Products</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<NavLink class="btn btn-primary" href="/admin/products/create">Create</NavLink>
+
+@inject IProductQueriesClient _productQueriesClient
+@inject IProductCommandsClient _ProductCommandsClient
+@code {
+    // need to keep initialized same as in js !!!
+    public IEnumerable<GetAllProductsExportProduct> ProductData { get; private set; } = new List<GetAllProductsExportProduct>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateData();
+        await base.OnInitializedAsync();
+    }
+
+
+    public async Task DeleteProduct(GetAllProductsExportProduct p)
+    {
+        await _ProductCommandsClient.RemoveProductAsync(new RemoveProductControllerInput { ProductId = p.ProductId });
+        await UpdateData();
+    }
+
+    public string GetDetailsUrl(GetAllProductsExportProduct product)
+    {
+        return $"/admin/products/details/{product.ProductId}";
+    }
+
+    private async Task UpdateData()
+    {
+        const int maxSupportedProductsCount = 1000;
+        var productsOutput = await _productQueriesClient.GetAllProductsAsync(maxSupportedProductsCount, 0, null);
+        if (productsOutput.TotalWithSelectedCategory > maxSupportedProductsCount)
+        {
+            throw new Exception($"Admin app doesn't support products pagination yet. So it takes only first {maxSupportedProductsCount} products.");
+        }
+        ProductData = productsOutput.Products;
+    }
+}

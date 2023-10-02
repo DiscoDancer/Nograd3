@@ -397,3 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /Nograd/Nograd.Clients.CustomerApp/wwwroot/lib
+/Nograd/Nograd.Clients.AdminApp/wwwroot/lib/bootstrap

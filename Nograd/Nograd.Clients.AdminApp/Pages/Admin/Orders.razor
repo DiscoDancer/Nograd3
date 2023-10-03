@@ -1,0 +1,57 @@
+﻿@page "/admin/orders"
+@using Nograd.OrderService.Queries.Client
+@using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers
+
+<OrderTable TableTitle="Unshipped Orders"
+            Orders="UnshippedOrders" ButtonLabel="Ship" OrderSelected="ShipOrderAsync" />
+<OrderTable TableTitle="Shipped Orders"
+            Orders="ShippedOrders" ButtonLabel="Reset" OrderSelected="ResetOrderAsync" />
+
+<button class="btn btn-info" @onclick="@(e => UpdateDataAsync())">Refresh Data</button>
+
+@inject IOrderQueriesClient _orderQueriesClient
+
+@code {
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> AllOrders { get; set; } =
+        new List<GetAllOrdersControllerOutputOrder>();
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> UnshippedOrders { get; set; } =
+        new List<GetAllOrdersControllerOutputOrder>();
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> ShippedOrders { get; set; } =
+        new List<GetAllOrdersControllerOutputOrder>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateDataAsync();
+    }
+
+    private async Task UpdateDataAsync()
+    {
+        var orders = await _orderQueriesClient.GetAllOrdersAsync();
+        if (orders.Orders == null)
+        {
+            throw new Exception("Failed to load orders.");
+        }
+
+        AllOrders = orders.Orders;
+        UnshippedOrders = AllOrders
+            .Where(x => x.IsShipped == false || x.IsShipped == null)
+            .ToList();
+        ShippedOrders = AllOrders
+            .Where(x => x.IsShipped == true)
+            .ToList();
+    }
+
+    public async Task ShipOrderAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task ResetOrderAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+}

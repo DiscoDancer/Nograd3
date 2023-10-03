@@ -1,14 +1,15 @@
 ﻿namespace Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers;
 
-public sealed class GetAllOrdersExportOrder
+[Serializable]
+public sealed class GetAllOrdersControllerOutputOrder
 {
-    public GetAllOrdersExportOrder(
+    public GetAllOrdersControllerOutputOrder(
         Guid orderId,
         string customerAddress,
         string customerName,
         bool isGift,
         bool isShipped,
-        IReadOnlyCollection<GetAllOrdersExportOrderProductQuantity> productQuantities)
+        IReadOnlyCollection<GetAllOrdersControllerOutputProductQuantity> productQuantities)
     {
         if (orderId == Guid.Empty) throw new ArgumentNullException(nameof(orderId));
         if (string.IsNullOrWhiteSpace(customerName)) throw new ArgumentNullException(nameof(customerName));
@@ -25,16 +26,26 @@ public sealed class GetAllOrdersExportOrder
 
         foreach (var pq in ProductQuantities)
         {
+            if (pq.Product?.Price == null)
+            {
+                throw new ArgumentNullException(nameof(productQuantities));
+            }
+
             Total += pq.Product.Price * pq.Quantity;
         }
     }
 
+    public GetAllOrdersControllerOutputOrder()
+    {
 
-    public IReadOnlyCollection<GetAllOrdersExportOrderProductQuantity> ProductQuantities { get; }
-    public bool IsShipped { get; }
-    public bool IsGift { get; }
-    public string CustomerName { get; }
-    public string CustomerAddress { get; }
-    public Guid OrderId { get; }
-    public decimal Total { get; }
+    }
+
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputProductQuantity>? ProductQuantities { get; set; }
+    public bool? IsShipped { get; set; }
+    public bool? IsGift { get; set; }
+    public string? CustomerName { get; set; }
+    public string? CustomerAddress { get; set; }
+    public Guid? OrderId { get; set; }
+    public decimal? Total { get; set; }
 }

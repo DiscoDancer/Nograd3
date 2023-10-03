@@ -1,8 +1,9 @@
 ﻿namespace Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers;
 
-public sealed class GetAllOrdersExportProduct
+[Serializable]
+public sealed class GetAllOrdersControllerOutputProduct
 {
-    public GetAllOrdersExportProduct(
+    public GetAllOrdersControllerOutputProduct(
         string name,
         string description,
         string category,
@@ -23,9 +24,14 @@ public sealed class GetAllOrdersExportProduct
         ProductId = productId;
     }
 
-    public string Name { get; }
-    public string Description { get; }
-    public Guid ProductId { get; }
-    public string Category { get; }
-    public decimal Price { get; }
+    public GetAllOrdersControllerOutputProduct()
+    {
+
+    }
+
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public Guid? ProductId { get; set; }
+    public string? Category { get; set; }
+    public decimal? Price { get; set; }
 }

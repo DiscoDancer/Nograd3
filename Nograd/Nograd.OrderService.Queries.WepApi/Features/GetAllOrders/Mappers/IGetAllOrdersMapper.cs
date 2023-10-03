@@ -5,5 +5,5 @@ namespace Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Mappers;
 
 public interface IGetAllOrdersMapper
 {
-    public GetAllOrdersExportOrder Map(OrderEntity order);
+    public GetAllOrdersControllerOutputOrder Map(OrderEntity order);
 }

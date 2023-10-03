@@ -6,7 +6,7 @@ using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Queries;
 namespace Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(GetAllOrdersControllerRoutes.ControllerRoute)]
 public sealed class GetAllOrdersController : ControllerBase
 {
     private readonly ILogger<GetAllOrdersController> _logger;
@@ -22,6 +22,7 @@ public sealed class GetAllOrdersController : ControllerBase
     }
 
     [HttpGet]
+    [Route(GetAllOrdersControllerRoutes.ActionRoute)]
     public async Task<ActionResult> GetAllOrdersAsync()
     {
         try
@@ -29,29 +30,24 @@ public sealed class GetAllOrdersController : ControllerBase
             var orders = await _mediator.Send(new GetAllOrdersQuery());
             var exportOrders = orders.Select(_mapper.Map).ToList();
 
-            return NormalResponse(exportOrders);
+            return Ok(new GetAllOrdersControllerOutput
+            {
+                Orders = exportOrders,
+                Message =
+                    $"Successfully returned {exportOrders.Count} Order{(exportOrders.Count > 1 ? "s" : string.Empty)}!",
+            });
         }
         catch (Exception e)
         {
             const string safeErrorMessage = "Error while processing request to retrieve all orders!";
-            return ErrorResponse(e, safeErrorMessage);
+            _logger.LogError(e, safeErrorMessage);
+            var result = new GetAllOrdersControllerOutput
+            {
+                Orders = null,
+                Message = safeErrorMessage,
+            };
+
+            return StatusCode(StatusCodes.Status500InternalServerError, result);
         }
-    }
-
-    private ActionResult NormalResponse(List<GetAllOrdersExportOrder> orders)
-    {
-        if (!orders.Any())
-            return NoContent();
-
-        var count = orders.Count;
-        return Ok(new GetAllOrdersSuccessResponse(orders,
-            $"Successfully returned {count} Order{(count > 1 ? "s" : string.Empty)}!"));
-    }
-
-    private ActionResult ErrorResponse(Exception ex, string safeErrorMessage)
-    {
-        _logger.LogError(ex, safeErrorMessage);
-
-        return StatusCode(StatusCodes.Status500InternalServerError, new GetAllOrdersErrorResponse(safeErrorMessage));
     }
 }

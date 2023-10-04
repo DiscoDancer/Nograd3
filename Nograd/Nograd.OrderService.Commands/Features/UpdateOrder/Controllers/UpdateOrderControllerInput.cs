@@ -1,5 +1,6 @@
 ﻿namespace Nograd.OrderService.Commands.Features.UpdateOrder.Controllers;
 
+[Serializable]
 public sealed class UpdateOrderControllerInput
 {
     public Guid? Id { get; set; }

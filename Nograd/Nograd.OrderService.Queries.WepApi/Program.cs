@@ -1,5 +1,5 @@
 using Nograd.Libraries.AspNetCoreExtensions;
-using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders;
+using Nograd.OrderService.Queries.WepApi.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.HideEndpointsFromOtherAssemblies(typeof(Program)));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-builder.UseGetAllOrdersFeature();
+builder.UseFeatures();
 
 
 var app = builder.Build();

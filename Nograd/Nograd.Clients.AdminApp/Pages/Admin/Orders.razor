@@ -46,11 +46,15 @@
 
     public async Task ShipOrderAsync(Guid id)
     {
+        var orderOrDefault = await _orderQueriesClient.GetOrderByIdOrDefaultAsync(id);
+
         throw new NotImplementedException();
     }
 
     public async Task ResetOrderAsync(Guid id)
     {
+        var orderOrDefault = await _orderQueriesClient.GetOrderByIdOrDefaultAsync(id);
+
         throw new NotImplementedException();
     }
 

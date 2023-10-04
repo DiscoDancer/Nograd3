@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nograd.OrderService.Commands.Client\Nograd.OrderService.Commands.Client.csproj" />
     <ProjectReference Include="..\Nograd.OrderService.Queries.Client\Nograd.OrderService.Queries.Client.csproj" />
     <ProjectReference Include="..\Nograd.ProductService.Client\Nograd.ProductService.Queries.Client.csproj" />
     <ProjectReference Include="..\Nograd.ProductService.Commands.Client\Nograd.ProductService.Commands.Client.csproj" />

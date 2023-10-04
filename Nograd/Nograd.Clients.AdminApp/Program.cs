@@ -1,3 +1,4 @@
+using Nograd.OrderService.Commands.Client;
 using Nograd.OrderService.Queries.Client;
 using Nograd.ProductService.Commands.Client;
 using Nograd.ProductService.Queries.Client;
@@ -10,6 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.UseProductCommandsClient();
 builder.UseProductQueriesClient();
 builder.UseOrderQueriesClient();
+builder.UseOrderCommandsClient();
 
 var app = builder.Build();
 

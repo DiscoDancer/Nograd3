@@ -1,6 +1,8 @@
 ﻿@page "/admin/orders"
 @using Nograd.OrderService.Queries.Client
 @using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers
+@using Nograd.OrderService.Commands.Client
+@using Nograd.OrderService.Commands.Features.UpdateOrder.Controllers
 
 <OrderTable TableTitle="Unshipped Orders"
             Orders="UnshippedOrders" ButtonLabel="Ship" OrderSelected="ShipOrderAsync" />
@@ -10,6 +12,7 @@
 <button class="btn btn-info" @onclick="@(e => UpdateDataAsync())">Refresh Data</button>
 
 @inject IOrderQueriesClient _orderQueriesClient
+@inject IOrderCommandsClient _orderCommandsClient
 
 @code {
 
@@ -47,15 +50,50 @@
     public async Task ShipOrderAsync(Guid id)
     {
         var orderOrDefault = await _orderQueriesClient.GetOrderByIdOrDefaultAsync(id);
+        if (orderOrDefault == null)
+        {
+            throw new Exception($"Product with id {id} not found. Not possible to set shipped.");
+        }
+        var input = new UpdateOrderControllerInput
+            {
+                CustomerAddress = orderOrDefault.CustomerAddress,
+                CustomerName = orderOrDefault.CustomerName,
+                Id = id,
+                IsGift = orderOrDefault.IsGift,
+                IsShipped = true,
+                ProductQuantities = orderOrDefault.ProductQuantities.Select(pq => new UpdateOrderControllerInputProductQuantity
+                {
+                    ProductId = pq.Product.ProductId,
+                    Quantity = pq.Quantity
+                }).ToList()
+            };
 
-        throw new NotImplementedException();
+        await _orderCommandsClient.UpdateOrderAsync(input);
+        await UpdateDataAsync();
     }
 
     public async Task ResetOrderAsync(Guid id)
     {
         var orderOrDefault = await _orderQueriesClient.GetOrderByIdOrDefaultAsync(id);
+        if (orderOrDefault == null)
+        {
+            throw new Exception($"Product with id {id} not found. Not possible to set shipped.");
+        }
+        var input = new UpdateOrderControllerInput
+        {
+            CustomerAddress = orderOrDefault.CustomerAddress,
+            CustomerName = orderOrDefault.CustomerName,
+            Id = id,
+            IsGift = orderOrDefault.IsGift,
+            IsShipped = false,
+            ProductQuantities = orderOrDefault.ProductQuantities.Select(pq => new UpdateOrderControllerInputProductQuantity
+            {
+                ProductId = pq.Product.ProductId,
+                Quantity = pq.Quantity
+            }).ToList()
+        };
 
-        throw new NotImplementedException();
+        await _orderCommandsClient.UpdateOrderAsync(input);
+        await UpdateDataAsync();
     }
-
 }

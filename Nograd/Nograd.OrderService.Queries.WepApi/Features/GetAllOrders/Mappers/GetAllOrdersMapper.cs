@@ -5,7 +5,7 @@ namespace Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Mappers;
 
 public sealed class GetAllOrdersMapper : IGetAllOrdersMapper
 {
-    public GetAllOrdersExportOrder Map(OrderEntity order)
+    public GetAllOrdersControllerOutputOrder Map(OrderEntity order)
     {
         if (order == null) throw new ArgumentNullException(nameof(order));
         if (string.IsNullOrWhiteSpace(order.CustomerAddress))
@@ -18,10 +18,10 @@ public sealed class GetAllOrdersMapper : IGetAllOrdersMapper
 
         var productQuantities = order
             .ProductQuantities
-            .Select(x => new GetAllOrdersExportOrderProductQuantity(Map(x.Product), x.Quantity))
+            .Select(x => new GetAllOrdersControllerOutputProductQuantity(Map(x.Product), x.Quantity))
             .ToList();
 
-        return new GetAllOrdersExportOrder(
+        return new GetAllOrdersControllerOutputOrder(
             order.OrderId,
             productQuantities: productQuantities,
             customerName: order.CustomerName,
@@ -30,7 +30,7 @@ public sealed class GetAllOrdersMapper : IGetAllOrdersMapper
             isShipped: order.IsShipped);
     }
 
-    private GetAllOrdersExportProduct Map(ProductEntity product)
+    private GetAllOrdersControllerOutputProduct Map(ProductEntity product)
     {
         if (product == null) throw new ArgumentNullException(nameof(product));
         if (string.IsNullOrWhiteSpace(product.Name)) throw new ArgumentNullException(nameof(product.Name));
@@ -40,7 +40,7 @@ public sealed class GetAllOrdersMapper : IGetAllOrdersMapper
         if (product.Price <= 0) throw new ArgumentNullException(nameof(product.Price));
         if (product.ProductId == Guid.Empty) throw new ArgumentNullException(nameof(product.ProductId));
 
-        return new GetAllOrdersExportProduct(
+        return new GetAllOrdersControllerOutputProduct(
             product.Name,
             category: product.Category,
             description: product.Description,

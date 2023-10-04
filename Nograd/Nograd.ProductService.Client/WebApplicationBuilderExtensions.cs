@@ -8,12 +8,12 @@ public static class WebApplicationBuilderExtensions
 {
     public static void UseProductQueriesClient(this WebApplicationBuilder builder)
     {
-        builder.Services.Configure<ProductServiceClientConfig>(builder.Configuration.GetSection(nameof(ProductServiceClientConfig)));
-        var productServiceClientConfig = builder.Services.BuildServiceProvider().GetRequiredService<IOptions<ProductServiceClientConfig>>();
+        builder.Services.Configure<ProductQueriesClientConfig>(builder.Configuration.GetSection(nameof(ProductQueriesClientConfig)));
+        var productServiceClientConfig = builder.Services.BuildServiceProvider().GetRequiredService<IOptions<ProductQueriesClientConfig>>();
 
-        if (string.IsNullOrWhiteSpace(productServiceClientConfig?.Value?.ProductServiceBaseUrl))
+        if (string.IsNullOrWhiteSpace(productServiceClientConfig?.Value?.ProductQueriesBaseUrl))
             throw new Exception("Can't read product service base url from configuration.");
 
-        builder.Services.AddScoped<IProductQueriesClient, ProductQueriesClient>(_ => new ProductQueriesClient(productServiceClientConfig.Value.ProductServiceBaseUrl!));
+        builder.Services.AddScoped<IProductQueriesClient, ProductQueriesClient>(_ => new ProductQueriesClient(productServiceClientConfig.Value.ProductQueriesBaseUrl!));
     }
 }

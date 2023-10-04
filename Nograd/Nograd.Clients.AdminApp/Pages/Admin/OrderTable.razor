@@ -1,0 +1,54 @@
+﻿@using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers
+
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+    <tr><th colspan="5" class="text-center">@TableTitle</th></tr>
+    </thead>
+    <tbody>
+    @if (Orders.Any())
+    {
+        @foreach (var o in Orders)
+        {
+            <tr>
+                <td>Id: @o.OrderId.Value</td>
+                <td>Customer: @o.CustomerName</td>
+                <th>Product</th>
+                <th>Quantity</th>
+                <td>
+                    <button class="btn btn-sm btn-danger"
+                            @onclick="@(e => OrderSelected.InvokeAsync(o.OrderId.Value))">
+                        @ButtonLabel
+                    </button>
+                </td>
+            </tr>
+            @foreach (var pq in o.ProductQuantities)
+            {
+                <tr>
+                    <td colspan="2"></td>
+                    <td>@pq.Product.Name</td>
+                    <td>@pq.Quantity</td>
+                    <td></td>
+                </tr>
+            }
+        }
+    }
+    else
+    {
+        <tr><td colspan="5" class="text-center">No Orders</td></tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string TableTitle { get; set; } = "Orders";
+
+    [Parameter]
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> Orders { get; set; } = new List<GetAllOrdersControllerOutputOrder>();
+
+    [Parameter]
+    public string ButtonLabel { get; set; } = "Ship";
+
+    [Parameter]
+    public EventCallback<Guid> OrderSelected { get; set; }
+}

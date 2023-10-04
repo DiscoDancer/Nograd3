@@ -1,5 +1,6 @@
 ﻿namespace Nograd.OrderService.Commands.Features.RemoveOrder.Controllers;
 
+[Serializable]
 public sealed class RemoveOrderControllerOutput
 {
     public RemoveOrderControllerOutput(Guid? id, string message)
@@ -10,6 +11,11 @@ public sealed class RemoveOrderControllerOutput
         Message = message;
     }
 
-    public Guid? OrderId { get; }
-    public string Message { get; }
+    public RemoveOrderControllerOutput()
+    {
+
+    }
+
+    public Guid? OrderId { get; set; }
+    public string? Message { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Nograd.OrderService.Commands.Features.UpdateOrder.Controllers;
 
+[Serializable]
 public sealed class UpdateOrderControllerOutput
 {
     public UpdateOrderControllerOutput(Guid? id, string message)
@@ -10,6 +11,11 @@ public sealed class UpdateOrderControllerOutput
         Message = message;
     }
 
-    public Guid? OrderId { get; }
-    public string Message { get; }
+    public UpdateOrderControllerOutput()
+    {
+
+    }
+
+    public Guid? OrderId { get; set; }
+    public string? Message { get; set; }
 }

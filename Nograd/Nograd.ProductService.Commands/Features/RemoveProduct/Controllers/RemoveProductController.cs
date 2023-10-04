@@ -5,7 +5,7 @@ using Nograd.ProductService.Commands.Features.RemoveProduct.Mappers;
 namespace Nograd.ProductService.Commands.Features.RemoveProduct.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(RemoveProductControllerRoutes.ControllerRoute)]
 public sealed class RemoveProductController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -23,6 +23,7 @@ public sealed class RemoveProductController : ControllerBase
     }
 
     [HttpDelete]
+    [Route(RemoveProductControllerRoutes.ActionRoute)]
     public async Task<ActionResult> RemoveProductAsync(RemoveProductControllerInput input)
     {
         try

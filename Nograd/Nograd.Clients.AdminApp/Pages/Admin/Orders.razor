@@ -1,0 +1,99 @@
+﻿@page "/admin/orders"
+@using Nograd.OrderService.Queries.Client
+@using Nograd.OrderService.Queries.WepApi.Features.GetAllOrders.Controllers
+@using Nograd.OrderService.Commands.Client
+@using Nograd.OrderService.Commands.Features.UpdateOrder.Controllers
+
+<OrderTable TableTitle="Unshipped Orders"
+            Orders="UnshippedOrders" ButtonLabel="Ship" OrderSelected="ShipOrderAsync" />
+<OrderTable TableTitle="Shipped Orders"
+            Orders="ShippedOrders" ButtonLabel="Reset" OrderSelected="ResetOrderAsync" />
+
+<button class="btn btn-info" @onclick="@(e => UpdateDataAsync())">Refresh Data</button>
+
+@inject IOrderQueriesClient _orderQueriesClient
+@inject IOrderCommandsClient _orderCommandsClient
+
+@code {
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> AllOrders { get; set; } =
+        new List<GetAllOrdersControllerOutputOrder>();
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> UnshippedOrders { get; set; } =
+        new List<GetAllOrdersControllerOutputOrder>();
+
+    public IReadOnlyCollection<GetAllOrdersControllerOutputOrder> ShippedOrders { get; set; } =
+        new List<GetAllOrdersControllerOutputOrder>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateDataAsync();
+    }
+
+    private async Task UpdateDataAsync()
+    {
+        var orders = await _orderQueriesClient.GetAllOrdersAsync();
+        if (orders.Orders == null)
+        {
+            throw new Exception("Failed to load orders.");
+        }
+
+        AllOrders = orders.Orders;
+        UnshippedOrders = AllOrders
+            .Where(x => x.IsShipped == false || x.IsShipped == null)
+            .ToList();
+        ShippedOrders = AllOrders
+            .Where(x => x.IsShipped == true)
+            .ToList();
+    }
+
+    public async Task ShipOrderAsync(Guid id)
+    {
+        var orderOrDefault = await _orderQueriesClient.GetOrderByIdOrDefaultAsync(id);
+        if (orderOrDefault == null)
+        {
+            throw new Exception($"Product with id {id} not found. Not possible to set shipped.");
+        }
+        var input = new UpdateOrderControllerInput
+            {
+                CustomerAddress = orderOrDefault.CustomerAddress,
+                CustomerName = orderOrDefault.CustomerName,
+                Id = id,
+                IsGift = orderOrDefault.IsGift,
+                IsShipped = true,
+                ProductQuantities = orderOrDefault.ProductQuantities.Select(pq => new UpdateOrderControllerInputProductQuantity
+                {
+                    ProductId = pq.Product.ProductId,
+                    Quantity = pq.Quantity
+                }).ToList()
+            };
+
+        await _orderCommandsClient.UpdateOrderAsync(input);
+        await UpdateDataAsync();
+    }
+
+    public async Task ResetOrderAsync(Guid id)
+    {
+        var orderOrDefault = await _orderQueriesClient.GetOrderByIdOrDefaultAsync(id);
+        if (orderOrDefault == null)
+        {
+            throw new Exception($"Product with id {id} not found. Not possible to set shipped.");
+        }
+        var input = new UpdateOrderControllerInput
+        {
+            CustomerAddress = orderOrDefault.CustomerAddress,
+            CustomerName = orderOrDefault.CustomerName,
+            Id = id,
+            IsGift = orderOrDefault.IsGift,
+            IsShipped = false,
+            ProductQuantities = orderOrDefault.ProductQuantities.Select(pq => new UpdateOrderControllerInputProductQuantity
+            {
+                ProductId = pq.Product.ProductId,
+                Quantity = pq.Quantity
+            }).ToList()
+        };
+
+        await _orderCommandsClient.UpdateOrderAsync(input);
+        await UpdateDataAsync();
+    }
+}

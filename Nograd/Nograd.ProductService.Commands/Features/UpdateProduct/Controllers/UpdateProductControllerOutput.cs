@@ -1,19 +1,18 @@
-﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct.Controllers
+﻿namespace Nograd.ProductService.Commands.Features.UpdateProduct.Controllers;
+
+[Serializable]
+public sealed class UpdateProductControllerOutput
 {
-    public sealed class UpdateProductControllerOutput
+    public UpdateProductControllerOutput(Guid? id, string message)
     {
-        public UpdateProductControllerOutput(Guid? id, string message)
-        {
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+        if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
 
-            ProductId = id;
-            Message = message;
-        }
-
-        public Guid? ProductId { get; }
-        public string Message { get; }
+        ProductId = id;
+        Message = message;
     }
+
+    public UpdateProductControllerOutput() {}
+
+    public Guid? ProductId { get; set; }
+    public string? Message { get; set; }
 }

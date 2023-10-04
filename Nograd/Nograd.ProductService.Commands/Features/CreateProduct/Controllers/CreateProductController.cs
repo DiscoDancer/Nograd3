@@ -5,7 +5,7 @@ using Nograd.ProductService.Commands.Features.CreateProduct.Mappers;
 namespace Nograd.ProductService.Commands.Features.CreateProduct.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route(CreateProductControllerRoutes.ControllerRoute)]
 public sealed class CreateProductController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -24,6 +24,7 @@ public sealed class CreateProductController : ControllerBase
     }
 
     [HttpPost]
+    [Route(CreateProductControllerRoutes.ActionRoute)]
     public async Task<ActionResult> CreateProductAsync(CreateProductControllerInput input)
     {
         var productId = Guid.NewGuid();

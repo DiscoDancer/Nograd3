@@ -1,0 +1,113 @@
+﻿@page "/admin/products/edit/{id:guid}"
+@page "/admin/products/create"
+@using Nograd.Clients.AdminApp.Models
+@using Nograd.ProductService.Commands.Client
+@using Nograd.ProductService.Commands.Features.CreateProduct.Controllers
+@using Nograd.ProductService.Commands.Features.UpdateProduct.Controllers
+@using Nograd.ProductService.Queries.Client
+
+<style>
+    div.validation-message {
+        color: rgb(220, 53, 69);
+        font-weight: 500
+    }
+</style>
+
+<h3 class="bg-@ThemeColor text-white text-center p-1">@TitleText a Product</h3>
+<EditForm Model="Product" OnValidSubmit="SaveProduct">
+    <DataAnnotationsValidator />
+    @if (Product.ProductID != null)
+    {
+        <div class="form-group">
+            <label>ID</label>
+            <input class="form-control" disabled value="@Product.ProductID" />
+        </div>
+    }
+    <div class="form-group">
+        <label>Name</label>
+        <ValidationMessage For="@(() => Product.Name)" />
+        <InputText class="form-control" @bind-Value="Product.Name" />
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <ValidationMessage For="@(() => Product.Description)" />
+        <InputText class="form-control" @bind-Value="Product.Description" />
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <ValidationMessage For="@(() => Product.Category)" />
+        <InputText class="form-control" @bind-Value="Product.Category" />
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <ValidationMessage For="@(() => Product.Price)" />
+        <InputNumber class="form-control" @bind-Value="Product.Price" />
+    </div>
+    <div class="mt-2">
+        <button type="submit" class="btn btn-@ThemeColor">Save</button>
+        <NavLink class="btn btn-secondary" href="/admin/products">Cancel</NavLink>
+    </div>
+</EditForm>
+
+@inject IProductQueriesClient _productQueriesClient
+@inject IProductCommandsClient _ProductCommandsClient
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+    public EditableProduct Product { get; set; } = new();
+
+    [Inject]
+    public NavigationManager? NavManager { get; set; }
+
+    public string ThemeColor => Id == null ? "primary" : "warning";
+    public string TitleText => Id == null ? "Create" : "Edit";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            var foundProduct = await _productQueriesClient.GetProductByIdOrDefaultAsync(Id.Value);
+            if (foundProduct == null)
+            {
+                throw new Exception("Product not found by specified id.");
+            }
+
+            Product = new EditableProduct
+                {
+                    Category = foundProduct.Category,
+                    Description = foundProduct.Description,
+                    Name = foundProduct.Name,
+                    Price = foundProduct.Price,
+                    ProductID = Id,
+                };
+        }
+    }
+
+    public async Task SaveProduct()
+    {
+        if (Id == null)
+        {
+            await _ProductCommandsClient.CreateProductAsync(new CreateProductControllerInput()
+            {
+                Category = Product.Category,
+                Description = Product.Description,
+                Name = Product.Name,
+                Price = Product.Price,
+            });
+
+        }
+        else
+        {
+            await _ProductCommandsClient.UpdateProductAsync(new UpdateProductControllerInput()
+            {
+                Category = Product.Category,
+                Description = Product.Description,
+                Name = Product.Name,
+                Price = Product.Price,
+                ProductId = Id
+            });
+        }
+
+        NavManager?.NavigateTo("/admin/products");
+    }
+}
